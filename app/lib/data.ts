@@ -88,7 +88,7 @@ export const projects: Project[] = [
     description:
       "A computer-vision model that classifies fruit as fresh or spoiled from images, trained and evaluated in a Kaggle notebook and wrapped in a small demo app for the final presentation (the app's interface was scaffolded with AI assistance).",
     tech: ["Python", "TensorFlow / Keras", "OpenCV", "Kaggle"],
-    role: "Group project (Group 4)",
+    role: "Group project",
     repo: "https://github.com/MichLoverz/group4-final_project-computer_vision-fresh_fruitness_detection",
     notebook: "https://www.kaggle.com/code/michloverz/fruit-freshness-demo-comvis-group-4",
     presentation: "https://www.youtube.com/watch?v=0obijlGrcCE",
@@ -101,7 +101,7 @@ export const projects: Project[] = [
     description:
       "A machine learning model that predicts wine quality scores from physicochemical properties, comparing several classifiers and feature-engineering approaches, deployed as a Streamlit app.",
     tech: ["Python", "scikit-learn", "pandas", "Streamlit"],
-    role: "Group project (Group 4) — final project",
+    role: "Group project — final project",
     repo: "https://github.com/MichLoverz/group4-final-project_wine-quality-prediction",
     demo: "https://group4-final-projectwine-quality-prediction-3kv3iqqqyhrswhl85b.streamlit.app/",
     presentation: "https://www.youtube.com/watch?v=hbMp0QXjsAA",
@@ -113,7 +113,7 @@ export const projects: Project[] = [
     description:
       "A predictive model for building energy efficiency (heating and cooling load) based on architectural parameters, deployed as a Streamlit app.",
     tech: ["Python", "scikit-learn", "pandas", "Streamlit"],
-    role: "Group project (Group 6) — assignment",
+    role: "Group project — assignment",
     repo: "https://github.com/MichLoverz/group6-energy-efficiency-prediction-assignmentml",
     demo: "https://group6-energy-efficiency-prediction-assignmentml.streamlit.app/",
     presentation: "https://www.youtube.com/watch?v=EFL0GWGbCok",

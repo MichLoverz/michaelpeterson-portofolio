@@ -186,17 +186,6 @@ export const collections: Collection[] = [
     ],
   },
   {
-    slug: "aivi",
-    group: "uiux",
-    title: "AIVI",
-    summary: "AI health check-up analysis — landing, sign-in, and results dashboard.",
-    intro:
-      "AIVI reads a user's general check-up data — blood pressure, glucose, cholesterol — and returns instant, AI-generated health recommendations. Landing page, authentication, and the main results page, in light mode.",
-    ratio: "portrait",
-    cover: "landing",
-    figma: "https://www.figma.com/design/0J8k5zyqXkrCeyL0paKPHP/AIVI?node-id=0-1&t=mZSh7LaK4zz2sezC-1",
-  },
-  {
     slug: "mrcoffee",
     group: "uiux",
     title: "Mr. Coffee (Figma)",
@@ -219,6 +208,17 @@ export const collections: Collection[] = [
     cover: "homepage",
     figma: "https://www.figma.com/design/OBxRyVD43WWjfuHqyzY7QZ/Mr.-Coffee-HTML?node-id=0-1&t=P61Ic6s7A1B8vtdP-1",
     links: [{ href: "/design/mrcoffee", label: "See the Figma version" }],
+  },
+  {
+    slug: "aivi",
+    group: "uiux",
+    title: "AIVI",
+    summary: "AI health check-up analysis — landing, sign-in, and results dashboard.",
+    intro:
+      "AIVI reads a user's general check-up data — blood pressure, glucose, cholesterol — and returns instant, AI-generated health recommendations. Landing page, authentication, and the main results page, in light mode.",
+    ratio: "portrait",
+    cover: "landing",
+    figma: "https://www.figma.com/design/0J8k5zyqXkrCeyL0paKPHP/AIVI?node-id=0-1&t=mZSh7LaK4zz2sezC-1",
   },
 
   // --- Video --------------------------------------------------------------
