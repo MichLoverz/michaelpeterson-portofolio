@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T18:53:44.698Z",
+  "generatedAt": "2026-09-13T19:06:18.032Z",
   "items": [
     {
       "id": "c52ce86596",
@@ -126,6 +126,90 @@
       "thumb": "/design/cisco/campus-network/08-server-block-e253a0922d.thumb.webp",
       "full": "/design/cisco/campus-network/08-server-block-e253a0922d.webp",
       "mtime": 1765897686049.6775
+    },
+    {
+      "id": "08480f8917",
+      "collection": "nlp",
+      "brand": "Review Authenticity Analyzer",
+      "group": null,
+      "title": "Short review - IndoBERT (99% authentic)",
+      "tag": null,
+      "width": 1309,
+      "height": 1022,
+      "tall": false,
+      "thumb": "/design/nlp/review-authenticity-analyzer/01-short-review-indobert-99-authentic-08480f8917.thumb.webp",
+      "full": "/design/nlp/review-authenticity-analyzer/01-short-review-indobert-99-authentic-08480f8917.webp",
+      "mtime": 1780531443059.9685
+    },
+    {
+      "id": "1119a5ceb3",
+      "collection": "nlp",
+      "brand": "Review Authenticity Analyzer",
+      "group": null,
+      "title": "Short review - LSTM + Word2Vec (81% authentic)",
+      "tag": null,
+      "width": 1311,
+      "height": 1023,
+      "tall": false,
+      "thumb": "/design/nlp/review-authenticity-analyzer/02-short-review-lstm-word2vec-81-authentic-1119a5ceb3.thumb.webp",
+      "full": "/design/nlp/review-authenticity-analyzer/02-short-review-lstm-word2vec-81-authentic-1119a5ceb3.webp",
+      "mtime": 1780531461638.3892
+    },
+    {
+      "id": "34c1b3b10d",
+      "collection": "nlp",
+      "brand": "Review Authenticity Analyzer",
+      "group": null,
+      "title": "Suspicious review - LSTM + Word2Vec (11% authentic)",
+      "tag": null,
+      "width": 1311,
+      "height": 1020,
+      "tall": false,
+      "thumb": "/design/nlp/review-authenticity-analyzer/03-suspicious-review-lstm-word2vec-11-authentic-34c1b3b10d.thumb.webp",
+      "full": "/design/nlp/review-authenticity-analyzer/03-suspicious-review-lstm-word2vec-11-authentic-34c1b3b10d.webp",
+      "mtime": 1780531668084.683
+    },
+    {
+      "id": "81a994e562",
+      "collection": "nlp",
+      "brand": "Review Authenticity Analyzer",
+      "group": null,
+      "title": "Suspicious review - IndoBERT (0% authentic)",
+      "tag": null,
+      "width": 1315,
+      "height": 1024,
+      "tall": false,
+      "thumb": "/design/nlp/review-authenticity-analyzer/04-suspicious-review-indobert-0-authentic-81a994e562.thumb.webp",
+      "full": "/design/nlp/review-authenticity-analyzer/04-suspicious-review-indobert-0-authentic-81a994e562.webp",
+      "mtime": 1780531711627.143
+    },
+    {
+      "id": "ea742ad131",
+      "collection": "nlp",
+      "brand": "Review Authenticity Analyzer",
+      "group": null,
+      "title": "Detailed review - LSTM + Word2Vec (100% authentic)",
+      "tag": null,
+      "width": 1307,
+      "height": 1023,
+      "tall": false,
+      "thumb": "/design/nlp/review-authenticity-analyzer/05-detailed-review-lstm-word2vec-100-authentic-ea742ad131.thumb.webp",
+      "full": "/design/nlp/review-authenticity-analyzer/05-detailed-review-lstm-word2vec-100-authentic-ea742ad131.webp",
+      "mtime": 1780531787421.5012
+    },
+    {
+      "id": "c46f03cb1d",
+      "collection": "nlp",
+      "brand": "Review Authenticity Analyzer",
+      "group": null,
+      "title": "Detailed review - IndoBERT (100% authentic)",
+      "tag": null,
+      "width": 1305,
+      "height": 1024,
+      "tall": false,
+      "thumb": "/design/nlp/review-authenticity-analyzer/06-detailed-review-indobert-100-authentic-c46f03cb1d.thumb.webp",
+      "full": "/design/nlp/review-authenticity-analyzer/06-detailed-review-indobert-100-authentic-c46f03cb1d.webp",
+      "mtime": 1780531857660.2437
     },
     {
       "id": "8036751c1b",

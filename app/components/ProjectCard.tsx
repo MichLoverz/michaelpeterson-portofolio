@@ -112,7 +112,7 @@ export default function ProjectCard({ project, index }: Props) {
           {project.repo && (
             <a href={project.repo} target="_blank" rel="noreferrer" className={linkClass}>
               <GithubIcon width={16} height={16} />
-              Open repository
+              {project.repoLabel ?? "Open repository"}
             </a>
           )}
           {project.notebook && (

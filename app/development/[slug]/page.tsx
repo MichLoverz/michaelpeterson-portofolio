@@ -32,7 +32,7 @@ export default async function ProjectPage({ params }: PageProps<"/development/[s
 
   const actions = [
     ...(project.demo ? [{ href: project.demo, label: "Open live app" }] : []),
-    ...(project.repo ? [{ href: project.repo, label: "Open repository" }] : []),
+    ...(project.repo ? [{ href: project.repo, label: project.repoLabel ?? "Open repository" }] : []),
     ...(project.notebook ? [{ href: project.notebook, label: "Open notebook" }] : []),
     ...(project.presentation ? [{ href: project.presentation, label: "Watch the presentation" }] : []),
     ...(project.report ? [{ href: project.report, label: "Final report & files" }] : []),

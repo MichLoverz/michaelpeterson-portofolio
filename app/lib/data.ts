@@ -44,6 +44,8 @@ export type Project = {
   tech: string[];
   role: string;
   repo?: string;
+  /** Label for the repo link when it isn't GitHub (default "Open repository"). */
+  repoLabel?: string;
   /** Shown instead of a repository link, e.g. when the source is private. */
   repoNote?: string;
   demo?: string;
@@ -80,6 +82,24 @@ export const projects: Project[] = [
     demo: "https://portfoliox-se.vercel.app/",
     docs: "https://app.notion.com/p/PORTFOLIOX-Software-Engineering-Project-Documentation-fb39690328d94aa1a3a35e884eeb1867",
     design: "/design/portfoliox",
+    featured: true,
+  },
+  {
+    title: "Review Authenticity Analyzer",
+    slug: "review-authenticity",
+    category: "AI / Machine Learning",
+    description:
+      "An NLP system that judges whether an Indonesian online review is genuine or fake. Two models run side by side — an LSTM over Word2Vec embeddings and a fine-tuned IndoBERT — combined with linguistic-feature analysis, served by a FastAPI backend behind a React interface and shipped as a Docker container on Hugging Face Spaces.",
+    tech: ["Python", "TensorFlow / Keras", "IndoBERT", "Word2Vec", "FastAPI", "React", "Docker", "Hugging Face Spaces"],
+    role: "Group project — final project",
+    repo: "https://huggingface.co/spaces/MichLoverz/review-authenticity-analyzer/tree/main",
+    repoLabel: "Source on Hugging Face",
+    demo: "https://huggingface.co/spaces/MichLoverz/review-authenticity-analyzer",
+    presentation: "https://www.youtube.com/watch?v=5KDMEInRzzU",
+    screen: "01-short-review",
+    gallery: "nlp",
+    galleryIntro:
+      "The same three reviews, scored by both models. A glowing one-liner, a review that reads like a template, and a long, specific one — the LSTM + Word2Vec and IndoBERT models mostly agree, and where they differ the gap says something about how each reads the text.",
     featured: true,
   },
   {
