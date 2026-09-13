@@ -1,26 +1,246 @@
 @import "tailwindcss";
 
+/* --------------------------------------------------------------------------
+   Tokens — industrial terminal
+   Charcoal base, warm off-white text, one signal-yellow accent.
+   -------------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #111214;
+  --graphite: #1b1c1f;
+  --steel: #2e3034;
+  --ash: #9a9da3;
+  --bone: #eceae4;
+  --signal: #f8e22e;
+  --signal-ink: #141200; /* text on signal */
+  --rail-w: 4.5rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-steel: var(--steel);
+  --color-ash: var(--ash);
+  --color-bone: var(--bone);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+  --font-sans: var(--font-barlow);
+  --font-display: var(--font-barlow-condensed);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--steel);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-barlow), "Arial Narrow", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--signal-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Utilities
+   -------------------------------------------------------------------------- */
+
+/* Display face: condensed, tight, uppercase */
+.font-display {
+  font-family: var(--font-barlow-condensed), "Arial Narrow", Impact, sans-serif;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* Small technical label */
+.label {
+  font-family: var(--font-barlow), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+/* Chamfered corners (cut, not rounded) */
+.chamfer {
+  clip-path: polygon(
+    0.75rem 0,
+    100% 0,
+    100% calc(100% - 0.75rem),
+    calc(100% - 0.75rem) 100%,
+    0 100%,
+    0 0.75rem
+  );
+}
+.chamfer-sm {
+  clip-path: polygon(
+    0.5rem 0,
+    100% 0,
+    100% calc(100% - 0.5rem),
+    calc(100% - 0.5rem) 100%,
+    0 100%,
+    0 0.5rem
+  );
+}
+
+/* Corner brackets drawn on a positioned parent */
+.brackets {
+  position: relative;
+}
+.brackets::before,
+.brackets::after {
+  content: "";
+  position: absolute;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-color: var(--ash);
+  border-style: solid;
+  pointer-events: none;
+}
+.brackets::before {
+  top: 0;
+  left: 0;
+  border-width: 1px 0 0 1px;
+}
+.brackets::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 1px 1px 0;
+}
+.brackets-signal::before,
+.brackets-signal::after {
+  border-color: var(--signal);
+}
+
+/* Fine technical grid */
+.tech-grid {
+  background-image:
+    linear-gradient(to right, rgba(236, 234, 228, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(236, 234, 228, 0.06) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+}
+
+/* Yellow/black hazard stripe */
+.hazard {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--signal) 0 0.75rem,
+    var(--ink) 0.75rem 1.5rem
+  );
+}
+
+/* Crosshair "+" marker */
+.crosshair {
+  position: relative;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: var(--ash);
+}
+.crosshair::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+.crosshair::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+/* --------------------------------------------------------------------------
+   Hero reveal — the one orchestrated moment on the page
+   -------------------------------------------------------------------------- */
+@keyframes grid-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes sweep {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.reveal-grid {
+  animation: grid-in 1.2s ease-out both;
+}
+.reveal-line {
+  overflow: hidden;
+}
+.reveal-line > span {
+  display: block;
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.reveal-line:nth-child(2) > span {
+  animation-delay: 0.12s;
+}
+.reveal-meta {
+  animation: grid-in 0.8s ease-out 0.7s both;
+}
+.scan {
+  animation: sweep 6s linear 1.2s infinite;
+}
+.blink {
+  animation: blink 1.6s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal-grid,
+  .reveal-line > span,
+  .reveal-meta,
+  .scan,
+  .blink {
+    animation: none;
+  }
+  .scan {
+    display: none;
+  }
 }
