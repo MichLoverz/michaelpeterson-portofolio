@@ -140,8 +140,7 @@ export const collections: Collection[] = [
       "A mobile app that connects households, restaurants, and supermarkets around food stock. Every role gets its own flow — sign-up, stock and category management, recipe recommendations, ordering and checkout, chat, and support — designed screen by screen in Figma.",
     ratio: "story",
     cover: "4-main-menu",
-    // TODO(michael): paste the Figma share link.
-    figma: "",
+    figma: "https://www.figma.com/design/sCMRRVYBxw3whkq4M4Kp6S/Pantry-Hub?node-id=0-1&t=25BJkwDLAqxFazgy-1",
   },
   {
     slug: "promohub",
@@ -152,8 +151,18 @@ export const collections: Collection[] = [
       "A promo-discovery website: homepage, search and category browsing, merchant pages, descriptions, reviews, bookmarks, and a points-redemption system. Each page is shown as a full-length screenshot — open one and scroll.",
     ratio: "portrait",
     cover: "homepage",
-    // TODO(michael): paste the Figma share link.
-    figma: "",
+    figma: "https://www.figma.com/design/wNal59Oi4BQqvtKc4y1eKd/PromoHub?node-id=0-1&t=WJ96XSAnhdGJ8Do8-1",
+  },
+  {
+    slug: "mrcoffee",
+    group: "uiux",
+    title: "Mr. Coffee",
+    summary: "Coffee shop website — menu, ordering, and a rewards program.",
+    intro:
+      "A website for a coffee shop: homepage, about page, menu, ordering flow with confirmation, and a rewards page with its pop-up states.",
+    ratio: "portrait",
+    cover: "homepage",
+    figma: "https://www.figma.com/design/HF0iNdOkwynnils0GUmC6n/Mr.-Coffee?node-id=0-1&t=iFdL6miEJ6P07REj-1",
   },
 
   // --- Video --------------------------------------------------------------
@@ -161,12 +170,25 @@ export const collections: Collection[] = [
     slug: "video",
     group: "video",
     title: "Video editing",
-    summary: "Short-form product videos and two longer course projects.",
+    summary: "Short-form product videos for two brands and two longer course projects.",
     intro:
-      "Edited videos: twelve short vertical product videos for a fashion label's social channels, and two longer final-project videos from university coursework.",
+      "Edited videos: short vertical product videos for a fashion label and a health-supplement brand's social channels, and two longer final-project videos from university coursework.",
     ratio: "video",
   },
 ];
+
+/** External links attached to individual pieces, matched on the file path. */
+export const itemLinks: { match: string; href: string; label: string }[] = [
+  {
+    match: "lorikeet-babybloom",
+    href: "https://www.instagram.com/by.babybloom",
+    label: "See it live on Instagram",
+  },
+];
+
+export function linkFor(item: GalleryItem) {
+  return itemLinks.find((l) => item.full.includes(l.match));
+}
 
 export type Video = {
   title: string;
@@ -191,6 +213,21 @@ export const videoGroups: { label: string; videos: Video[] }[] = [
       { title: "Pick Model Style", youtubeId: "JDzQ4C2VJyw", kind: "short" },
       { title: "Name The Style", youtubeId: "KIoKyonGB80", kind: "short" },
       { title: "Magnifier", youtubeId: "beloiyvELOQ", kind: "short" },
+    ],
+  },
+  {
+    label: "Daily Health — product videos",
+    videos: [
+      { title: "AmbeHeal", youtubeId: "ZMCu1txQyTI", kind: "short" },
+      { title: "Vitamin D3+K2", youtubeId: "ZPpO1JQkS2E", kind: "short" },
+      { title: "Visidat", youtubeId: "TaT7_1tiN44", kind: "short" },
+      { title: "Sunny Kids", youtubeId: "0t-j83s6S90", kind: "short" },
+      { title: "Oxi-T", youtubeId: "EMTs3HriI7Q", kind: "short" },
+      { title: "Maaginto", youtubeId: "NdB6J2IxXao", kind: "short" },
+      { title: "Ikan Gabus", youtubeId: "TZZi-N6-NRg", kind: "short" },
+      { title: "Glucosamine", youtubeId: "0c0_v3hGHHk", kind: "short" },
+      { title: "CalMagZinc", youtubeId: "QUkoSuszZGA", kind: "short" },
+      { title: "Colostrum", youtubeId: "CbP2b6L2J50", kind: "short" },
     ],
   },
   {

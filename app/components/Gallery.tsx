@@ -1,16 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { itemTitle, type Collection, type GalleryItem } from "@/app/lib/design";
-import { CloseIcon } from "./icons";
+import { itemTitle, linkFor, type Collection, type GalleryItem } from "@/app/lib/design";
+import { CloseIcon, ExternalLinkIcon } from "./icons";
 
 type GallerySection = { label: string | null; items: GalleryItem[] };
 
 type Props = {
   sections: GallerySection[];
   ratio: Collection["ratio"];
-  /** Show each piece's title under its thumbnail (useful for UI screens). */
-  captions?: boolean;
+  /** Show a caption under each thumbnail: the piece's title, or its brand. */
+  captions?: "title" | "brand";
 };
 
 // Grid density per aspect ratio.
@@ -22,7 +22,7 @@ const grid: Record<Collection["ratio"], string> = {
   video: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
 };
 
-export default function Gallery({ sections, ratio, captions = false }: Props) {
+export default function Gallery({ sections, ratio, captions }: Props) {
   const flat = sections.flatMap((s) => s.items);
   const [open, setOpen] = useState<number | null>(null);
 
@@ -72,12 +72,18 @@ export default function Gallery({ sections, ratio, captions = false }: Props) {
                 {section.items.map((item, i) => {
                   const index = start + i;
                   const puzzle = item.tag === "puzzle-grid";
+                  const link = linkFor(item);
                   return (
-                    <li key={item.id} className={puzzle ? "col-span-2 row-span-2" : ""}>
+                    <li
+                      key={item.id}
+                      className={`border border-steel bg-graphite transition-colors hover:border-ash focus-within:border-signal ${
+                        puzzle ? "col-span-2 row-span-2" : ""
+                      }`}
+                    >
                       <button
                         type="button"
                         onClick={() => setOpen(index)}
-                        className="group block w-full border border-steel bg-graphite text-left transition-colors hover:border-ash focus-visible:border-signal"
+                        className="group block w-full text-left"
                         aria-label={`Open ${itemTitle(item, index)}`}
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -89,12 +95,25 @@ export default function Gallery({ sections, ratio, captions = false }: Props) {
                           loading="lazy"
                           className="block h-auto w-full"
                         />
-                        {captions && (
-                          <span className="block truncate border-t border-steel px-3 py-2 text-sm text-ash transition-colors group-hover:text-bone">
-                            {itemTitle(item, index)}
-                          </span>
-                        )}
                       </button>
+                      {(captions || link) && (
+                        <div className="flex items-center justify-between gap-3 border-t border-steel px-3 py-2 text-sm">
+                          <span className="truncate text-ash">
+                            {captions === "brand" ? item.brand : itemTitle(item, index)}
+                          </span>
+                          {link && (
+                            <a
+                              href={link.href}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex shrink-0 items-center gap-1.5 text-bone transition-colors hover:text-signal"
+                            >
+                              {link.label}
+                              <ExternalLinkIcon width={14} height={14} />
+                            </a>
+                          )}
+                        </div>
+                      )}
                     </li>
                   );
                 })}
@@ -129,15 +148,28 @@ export default function Gallery({ sections, ratio, captions = false }: Props) {
                 {flat[open].tall ? " / scroll to read the full page" : ""}
               </p>
             </div>
-            <button
-              type="button"
-              onClick={close}
-              className="shrink-0 border border-steel p-2 text-bone transition-colors hover:border-signal hover:text-signal"
-              aria-label="Close"
-              autoFocus
-            >
-              <CloseIcon width={20} height={20} />
-            </button>
+            <div className="flex shrink-0 items-center gap-2">
+              {linkFor(flat[open]) && (
+                <a
+                  href={linkFor(flat[open])!.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-display hidden items-center gap-2 border border-steel px-3 py-1.5 text-base font-bold text-bone transition-colors hover:border-signal hover:text-signal sm:inline-flex"
+                >
+                  {linkFor(flat[open])!.label}
+                  <ExternalLinkIcon width={14} height={14} />
+                </a>
+              )}
+              <button
+                type="button"
+                onClick={close}
+                className="border border-steel p-2 text-bone transition-colors hover:border-signal hover:text-signal"
+                aria-label="Close"
+                autoFocus
+              >
+                <CloseIcon width={20} height={20} />
+              </button>
+            </div>
           </div>
 
           {/* Image — tall pages scroll inside the viewer instead of shrinking to fit */}

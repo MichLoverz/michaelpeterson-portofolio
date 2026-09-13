@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T15:44:36.099Z",
+  "generatedAt": "2026-09-13T16:47:02.745Z",
   "items": [
     {
       "id": "8036751c1b",
@@ -2912,6 +2912,104 @@
       "thumb": "/design/promohub/promohub/ulasan-d02aa8b40d.thumb.webp",
       "full": "/design/promohub/promohub/ulasan-d02aa8b40d.webp",
       "mtime": 1748193686747.5164
+    },
+    {
+      "id": "716a5a84a8",
+      "collection": "mrcoffee",
+      "brand": "Mr. Coffee",
+      "group": null,
+      "title": "About Us Page",
+      "tag": null,
+      "width": 720,
+      "height": 1985,
+      "tall": true,
+      "thumb": "/design/mrcoffee/mr-coffee/about-us-page-716a5a84a8.thumb.webp",
+      "full": "/design/mrcoffee/mr-coffee/about-us-page-716a5a84a8.webp",
+      "mtime": 1789317306402.5845
+    },
+    {
+      "id": "2ac2bfbeac",
+      "collection": "mrcoffee",
+      "brand": "Mr. Coffee",
+      "group": null,
+      "title": "Homepage",
+      "tag": null,
+      "width": 720,
+      "height": 2217,
+      "tall": true,
+      "thumb": "/design/mrcoffee/mr-coffee/homepage-2ac2bfbeac.thumb.webp",
+      "full": "/design/mrcoffee/mr-coffee/homepage-2ac2bfbeac.webp",
+      "mtime": 1789317306399.4668
+    },
+    {
+      "id": "9cc6cfc88a",
+      "collection": "mrcoffee",
+      "brand": "Mr. Coffee",
+      "group": null,
+      "title": "Menu Page",
+      "tag": null,
+      "width": 720,
+      "height": 969,
+      "tall": false,
+      "thumb": "/design/mrcoffee/mr-coffee/menu-page-9cc6cfc88a.thumb.webp",
+      "full": "/design/mrcoffee/mr-coffee/menu-page-9cc6cfc88a.webp",
+      "mtime": 1789317306403.5823
+    },
+    {
+      "id": "06ae2b5b24",
+      "collection": "mrcoffee",
+      "brand": "Mr. Coffee",
+      "group": null,
+      "title": "Order Page",
+      "tag": null,
+      "width": 720,
+      "height": 655,
+      "tall": false,
+      "thumb": "/design/mrcoffee/mr-coffee/order-page-06ae2b5b24.thumb.webp",
+      "full": "/design/mrcoffee/mr-coffee/order-page-06ae2b5b24.webp",
+      "mtime": 1789317306406.584
+    },
+    {
+      "id": "db5e08ff62",
+      "collection": "mrcoffee",
+      "brand": "Mr. Coffee",
+      "group": null,
+      "title": "Order Success Pop Up",
+      "tag": null,
+      "width": 528,
+      "height": 308,
+      "tall": false,
+      "thumb": "/design/mrcoffee/mr-coffee/order-success-pop-up-db5e08ff62.thumb.webp",
+      "full": "/design/mrcoffee/mr-coffee/order-success-pop-up-db5e08ff62.webp",
+      "mtime": 1789317306405.5847
+    },
+    {
+      "id": "45353764de",
+      "collection": "mrcoffee",
+      "brand": "Mr. Coffee",
+      "group": null,
+      "title": "Rewards Page",
+      "tag": null,
+      "width": 720,
+      "height": 2018,
+      "tall": true,
+      "thumb": "/design/mrcoffee/mr-coffee/rewards-page-45353764de.thumb.webp",
+      "full": "/design/mrcoffee/mr-coffee/rewards-page-45353764de.webp",
+      "mtime": 1789317306400.464
+    },
+    {
+      "id": "06d7b2d776",
+      "collection": "mrcoffee",
+      "brand": "Mr. Coffee",
+      "group": null,
+      "title": "Rewards Pop Up",
+      "tag": null,
+      "width": 528,
+      "height": 308,
+      "tall": false,
+      "thumb": "/design/mrcoffee/mr-coffee/rewards-pop-up-06d7b2d776.thumb.webp",
+      "full": "/design/mrcoffee/mr-coffee/rewards-pop-up-06d7b2d776.webp",
+      "mtime": 1789317306404.5842
     }
   ]
 }

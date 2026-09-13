@@ -91,7 +91,13 @@ export default async function CollectionPage({ params }: PageProps<"/design/[slu
               <Gallery
                 sections={sections}
                 ratio={collection.ratio}
-                captions={collection.group === "uiux"}
+                captions={
+                  collection.group === "uiux"
+                    ? "title"
+                    : collection.slug === "lorikeet"
+                      ? "brand"
+                      : undefined
+                }
               />
             )}
           </div>

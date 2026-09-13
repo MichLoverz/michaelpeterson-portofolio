@@ -35,7 +35,10 @@ const QUALITY = 82;
 //   rootGroup:        group name for files sitting at the folder root (with groupBySubfolder)
 //   tag:              free-form marker (e.g. "puzzle-grid" renders 2x2 in the grid)
 //   tagIf:            regex on the filename that applies `tag` only to matching files
-//   tallPages:        full-page screenshots — thumbs crop to the top, lightbox scrolls
+//   tallPages:        height/width ratio above which a page counts as "tall" — the
+//                     lightbox then scrolls it instead of shrinking it to fit
+//   thumbAspect:      [w, h] — every thumb gets this shape: taller images are
+//                     cropped to their top, shorter ones are centred on a dark canvas
 //   match / exclude:  regex on the filename — only include / skip matching files
 //   square:           centre-crop non-square images to 1:1 (keeps a feed grid even)
 const SOURCES = [
@@ -51,8 +54,11 @@ const SOURCES = [
   { dir: "College/Design", brand: "BabyBloom", collection: "lorikeet", match: /lorikeet/i },
   { dir: "College/Design", brand: "BabyBloom", collection: "campus-design", exclude: /lorikeet/i },
   { dir: "College/UI UX Application/PantryHub", brand: "PantryHub", collection: "pantryhub", groupBySubfolder: true, rootGroup: "Brand" },
-  { dir: "College/UI UX Web/PromoHub", brand: "PromoHub", collection: "promohub", tallPages: true },
+  { dir: "College/UI UX Web/PromoHub", brand: "PromoHub", collection: "promohub", tallPages: 1.4, thumbAspect: [4, 5] },
+  { dir: "College/UI UX Web/Mr Coffee", brand: "Mr. Coffee", collection: "mrcoffee", tallPages: 1.4, thumbAspect: [4, 5] },
 ];
+
+const CANVAS = { r: 27, g: 28, b: 31 }; // --graphite
 
 const IMAGE_EXT = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif"]);
 
@@ -147,7 +153,7 @@ async function main() {
         const meta = await sharp(file, { failOn: "none" }).metadata();
         width = meta.width;
         height = meta.pageHeight ?? meta.height; // animated GIFs report the stacked height
-        tall = Boolean(src.tallPages) || height / width > TALL_RATIO;
+        tall = height / width > (src.tallPages ?? TALL_RATIO);
 
         // Optional centre square crop (applied to both copies).
         let crop = null;
@@ -181,14 +187,25 @@ async function main() {
             .toFile(fullPath);
         }
 
-        // Thumbnail. Tall pages are cropped to their top 4:5 so the grid stays even.
+        // Thumbnail. With thumbAspect every tile gets the same shape: taller
+        // images show their top, shorter ones sit centred on a dark canvas.
         const thumb = open();
-        if (tall) {
-          await thumb
-            .extract({ left: 0, top: 0, width, height: Math.round((width * 5) / 4) })
-            .resize({ width: THUMB_MAX, withoutEnlargement: true })
-            .webp({ quality: QUALITY })
-            .toFile(thumbPath);
+        if (src.thumbAspect) {
+          const [aw, ah] = src.thumbAspect;
+          const targetH = Math.round((width * ah) / aw);
+          if (height > targetH) {
+            await thumb
+              .extract({ left: 0, top: 0, width, height: targetH })
+              .resize({ width: THUMB_MAX, withoutEnlargement: true })
+              .webp({ quality: QUALITY })
+              .toFile(thumbPath);
+          } else {
+            const w = Math.min(THUMB_MAX, width);
+            await thumb
+              .resize({ width: w, height: Math.round((w * ah) / aw), fit: "contain", background: CANVAS })
+              .webp({ quality: QUALITY })
+              .toFile(thumbPath);
+          }
         } else {
           await thumb
             .resize({ width: THUMB_MAX, height: THUMB_MAX, fit: "inside", withoutEnlargement: true })
