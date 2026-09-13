@@ -68,7 +68,7 @@ export const collections: Collection[] = [
     intro:
       "Listing images for a health-supplement brand — hero shots, benefit call-outs, size variants, and gift bundles. Each product ships as a coordinated set so the storefront reads as one brand.",
     ratio: "square",
-    cover: "colostrum-30-tablet-1",
+    cover: "calmagzinc-1",
   },
   {
     slug: "catalog",
@@ -93,11 +93,11 @@ export const collections: Collection[] = [
     slug: "instagram-feeds",
     group: "graphic",
     title: "Instagram feeds",
-    summary: "Campaign posts, holiday greetings, and a nine-tile puzzle grid.",
+    summary: "Campaign posts and holiday greetings for three brands.",
     intro:
-      "Feed posts for three brands: seasonal greetings and recruitment posts for a supplement company, sale campaigns for a fashion label — including a nine-tile puzzle grid that reads as one image on the profile — and promos for a retail store.",
+      "Feed posts for three brands: seasonal greetings and recruitment posts for a supplement company, sale campaigns for a fashion label, and promos for a retail store.",
     ratio: "square",
-    cover: "lorikeet",
+    cover: "1677723121859",
   },
   {
     slug: "instagram-stories",
@@ -107,14 +107,25 @@ export const collections: Collection[] = [
     intro:
       "Full-height story graphics built for the phone screen — product launches, promos, and holiday greetings.",
     ratio: "story",
+    cover: "tahun-baru-islam-story",
+  },
+  {
+    slug: "lorikeet",
+    group: "graphic",
+    title: "Lorikeet",
+    summary: "Themed nine-post Instagram grids that read as one image on the profile.",
+    intro:
+      "Lorikeet grids: nine feed posts planned as a single composition, so the brand's profile page shows one themed image while each post still works on its own. One for a fashion label's new-arrival campaign, one for a parenting-education brand concept.",
+    ratio: "wide",
+    cover: "gykaco",
   },
   {
     slug: "campus-design",
     group: "graphic",
     title: "Campus design work",
-    summary: "Brand concept, infographic, and social grid for a university project.",
+    summary: "Brand concept and infographic for a university project.",
     intro:
-      "Design pieces from coursework. BabyBloom is a digital parenting-education brand concept: a business infographic (SDG focus, mind map, value proposition canvas) and a nine-tile Instagram puzzle grid.",
+      "Design pieces from coursework. BabyBloom is a digital parenting-education brand concept — this business infographic covers its SDG focus, mind map, and value proposition canvas.",
     ratio: "wide",
     cover: "infographic",
   },

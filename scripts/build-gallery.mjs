@@ -36,17 +36,20 @@ const QUALITY = 82;
 //   tag:              free-form marker (e.g. "puzzle-grid" renders 2x2 in the grid)
 //   tagIf:            regex on the filename that applies `tag` only to matching files
 //   tallPages:        full-page screenshots — thumbs crop to the top, lightbox scrolls
+//   match / exclude:  regex on the filename — only include / skip matching files
+//   square:           centre-crop non-square images to 1:1 (keeps a feed grid even)
 const SOURCES = [
   { dir: "Daily Health/Design Marketplace", brand: "Daily Health", collection: "marketplace", groupBySubfolder: true },
   { dir: "Daily Health/Katalog Product", brand: "Daily Health", collection: "catalog" },
   { dir: "Daily Health/Design Product", brand: "Daily Health", collection: "packaging" },
   { dir: "Daily Health/Instagram Feeds", brand: "Daily Health", collection: "instagram-feeds" },
   { dir: "Gykaco/Instagram Feeds", brand: "Gykaco", collection: "instagram-feeds" },
-  { dir: "Gykaco/Lorikeet", brand: "Gykaco", collection: "instagram-feeds", tag: "puzzle-grid" },
-  { dir: "Global Cool", brand: "Global Cool", collection: "instagram-feeds" },
+  { dir: "Global Cool", brand: "Global Cool", collection: "instagram-feeds", square: true },
   { dir: "Daily Health/Instagram Story", brand: "Daily Health", collection: "instagram-stories" },
   { dir: "Gykaco/Instagram Story", brand: "Gykaco", collection: "instagram-stories" },
-  { dir: "College/Design", brand: "BabyBloom", collection: "campus-design", tag: "puzzle-grid", tagIf: /lorikeet/i },
+  { dir: "Gykaco/Lorikeet", brand: "Gykaco", collection: "lorikeet" },
+  { dir: "College/Design", brand: "BabyBloom", collection: "lorikeet", match: /lorikeet/i },
+  { dir: "College/Design", brand: "BabyBloom", collection: "campus-design", exclude: /lorikeet/i },
   { dir: "College/UI UX Application/PantryHub", brand: "PantryHub", collection: "pantryhub", groupBySubfolder: true, rootGroup: "Brand" },
   { dir: "College/UI UX Web/PromoHub", brand: "PromoHub", collection: "promohub", tallPages: true },
 ];
@@ -106,7 +109,12 @@ async function main() {
       continue;
     }
 
-    const files = await listImages(dir);
+    const files = (await listImages(dir)).filter((f) => {
+      const name = path.basename(f);
+      if (src.match && !src.match.test(name)) return false;
+      if (src.exclude && src.exclude.test(name)) return false;
+      return true;
+    });
     for (const file of files) {
       const rel = path.relative(dir, file);
       const inSubfolder = rel.includes(path.sep);
@@ -141,9 +149,26 @@ async function main() {
         height = meta.pageHeight ?? meta.height; // animated GIFs report the stacked height
         tall = Boolean(src.tallPages) || height / width > TALL_RATIO;
 
+        // Optional centre square crop (applied to both copies).
+        let crop = null;
+        if (src.square && width !== height) {
+          const size = Math.min(width, height);
+          crop = {
+            left: Math.round((width - size) / 2),
+            top: Math.round((height - size) / 2),
+            width: size,
+            height: size,
+          };
+          width = height = size;
+        }
+        const open = (opts = {}) => {
+          const img = sharp(file, { failOn: "none", ...opts });
+          return crop ? img.extract(crop) : img;
+        };
+
         // Full-size copy. Tall pages are sized by width so text stays readable;
         // animated GIFs keep their animation.
-        const full = sharp(file, { failOn: "none", animated: isGif });
+        const full = open({ animated: isGif });
         if (tall) {
           await full
             .resize({ width: TALL_FULL_WIDTH, withoutEnlargement: true })
@@ -157,7 +182,7 @@ async function main() {
         }
 
         // Thumbnail. Tall pages are cropped to their top 4:5 so the grid stays even.
-        const thumb = sharp(file, { failOn: "none" });
+        const thumb = open();
         if (tall) {
           await thumb
             .extract({ left: 0, top: 0, width, height: Math.round((width * 5) / 4) })
