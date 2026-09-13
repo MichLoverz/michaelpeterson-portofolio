@@ -51,6 +51,7 @@ const SOURCES = [
   // Floor plans ("Denah Lantai n") sort before the Packet Tracer screenshots by name.
   { dir: "College/Cisco Packet Tracer", brand: "Campus Network", collection: "cisco", thumbAspect: [16, 10], thumbFit: "contain" },
   { dir: "College/NLP", brand: "Review Authenticity Analyzer", collection: "nlp" },
+  { dir: "College/Research Paper", brand: "ICIMTech 2026", collection: "tb-paper", thumbAspect: [4, 3], thumbFit: "contain" },
 
   // --- Design ---------------------------------------------------------------
   { dir: "Daily Health/Design Marketplace", brand: "Daily Health", collection: "marketplace", groupBySubfolder: true },

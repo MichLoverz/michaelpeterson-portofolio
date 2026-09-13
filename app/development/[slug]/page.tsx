@@ -38,6 +38,7 @@ export default async function ProjectPage({ params }: PageProps<"/development/[s
     ...(project.report ? [{ href: project.report, label: "Final report & files" }] : []),
     ...(project.docs ? [{ href: project.docs, label: "Documentation" }] : []),
     ...(project.design ? [{ href: project.design, label: "See the design" }] : []),
+    ...(project.links ?? []),
   ];
 
   return (
@@ -49,7 +50,7 @@ export default async function ProjectPage({ params }: PageProps<"/development/[s
             crumbs={[
               { href: "/", label: "Home" },
               { href: "/#development", label: "Development" },
-              { href: `/development/${project.slug}`, label: project.title },
+              { href: `/development/${project.slug}`, label: project.shortTitle ?? project.title },
             ]}
             index={`03.${index}`}
             title={project.title}
@@ -61,7 +62,12 @@ export default async function ProjectPage({ params }: PageProps<"/development/[s
           <div className="mx-auto max-w-7xl px-5 py-12 md:px-12 md:py-16">
             {/* Tech + description block */}
             <div className="mb-12 grid gap-8 border-b border-steel pb-10 lg:grid-cols-[1.4fr_1fr]">
-              <p className="max-w-2xl text-lg leading-relaxed text-bone">{project.description}</p>
+              <div className="max-w-2xl space-y-4">
+                <p className="text-lg leading-relaxed text-bone">{project.description}</p>
+                {project.demoNote && (
+                  <p className="text-sm leading-relaxed text-ash">{project.demoNote}</p>
+                )}
+              </div>
               <ul className="flex flex-wrap gap-x-4 gap-y-2 self-start text-base text-ash lg:justify-end">
                 {project.tech.map((t) => (
                   <li key={t} className="flex items-center gap-2">

@@ -24,6 +24,7 @@ export const profile = {
     { key: "Education", value: "Computer Science, Binus University" },
     { key: "Development", value: "Machine learning, computer vision, Flutter" },
     { key: "Design", value: "Packaging, catalogs, marketplace, social media" },
+    { key: "Publication", value: "ICIMTech 2026 (IEEE) — first author" },
     { key: "Status", value: "Open to internships" },
   ],
   email: "michaelmarcel18@gmail.com",
@@ -37,9 +38,11 @@ export const profile = {
 
 export type Project = {
   title: string;
+  /** Short name for breadcrumbs when the title is long (e.g. a paper title). */
+  shortTitle?: string;
   /** URL segment for the detail page (only used when `gallery` is set). */
   slug?: string;
-  category: "AI / Machine Learning" | "Mobile" | "Web" | "Networking";
+  category: "AI / Machine Learning" | "Research" | "Mobile" | "Web" | "Networking";
   description: string;
   tech: string[];
   role: string;
@@ -49,7 +52,11 @@ export type Project = {
   /** Shown instead of a repository link, e.g. when the source is private. */
   repoNote?: string;
   demo?: string;
+  /** Small print under the links, e.g. hosting caveats for the live app. */
+  demoNote?: string;
   docs?: string;
+  /** Any other external links (label + href). */
+  links?: { href: string; label: string }[];
   /** Kaggle / Colab notebook. */
   notebook?: string;
   /** Recorded presentation (YouTube). */
@@ -96,10 +103,28 @@ export const projects: Project[] = [
     repoLabel: "Source on Hugging Face",
     demo: "https://huggingface.co/spaces/MichLoverz/review-authenticity-analyzer",
     presentation: "https://www.youtube.com/watch?v=5KDMEInRzzU",
+    demoNote:
+      "Runs on Hugging Face's free tier: it sleeps when idle and takes a minute to wake. If it shows a runtime error instead, only I can restart it — send me a message and I'll bring it back up.",
     screen: "01-short-review",
     gallery: "nlp",
     galleryIntro:
       "The same three reviews, scored by both models. A glowing one-liner, a review that reads like a template, and a long, specific one — the LSTM + Word2Vec and IndoBERT models mostly agree, and where they differ the gap says something about how each reads the text.",
+    featured: true,
+  },
+  {
+    title: "Two-Phase Transfer Learning with ResNet50 for Tuberculosis Detection in Chest X-rays",
+    shortTitle: "TB detection paper",
+    slug: "tb-detection-paper",
+    category: "Research",
+    description:
+      "Tuberculosis is the world's deadliest infectious disease, and chest X-ray screening is bottlenecked by radiologist shortages. This paper compares a ResNet50 trained in two phases — classification head first with the backbone frozen, then the top 30 layers fine-tuned at a reduced learning rate — against single- and two-phase baselines on other CNNs, using 2,200 X-rays pooled from the Shenzhen, Montgomery County, and Kaggle TB datasets. On a held-out set of 330 images it reached 92.1% accuracy, 96.6% precision, and 0.978 AUC-ROC (five-fold CV: 0.975 ± 0.008), and Grad-CAM maps show it attends to clinically relevant lung regions. Accepted and presented at ICIMTech 2026 (IEEE).",
+    tech: ["ResNet50", "Two-phase transfer learning", "Chest X-ray", "Grad-CAM", "5-fold cross-validation"],
+    role: "First author & presenter — ICIMTech 2026 (IEEE)",
+    links: [{ href: "https://bit.ly/ProceedingICIMTech2026", label: "Conference proceedings" }],
+    screen: "grad-cam",
+    gallery: "tb-paper",
+    galleryIntro:
+      "Figures from the paper, in reading order: the two-phase training pipeline and model architecture, training curves, evaluation on the held-out test set (confusion matrix, ROC, comparison across six models), Grad-CAM interpretability maps and sample predictions — then the author and presenter certificates from the 2026 International Conference on Information Management and Technology, held 19–20 August 2026 in Tangerang.",
     featured: true,
   },
   {
@@ -108,10 +133,10 @@ export const projects: Project[] = [
     description:
       "A computer-vision model that classifies fruit as fresh or spoiled from images, trained and evaluated in a Kaggle notebook and wrapped in a small demo app for the final presentation (the app's interface was scaffolded with AI assistance).",
     tech: ["Python", "TensorFlow / Keras", "OpenCV", "Kaggle"],
-    role: "Group project",
     repo: "https://github.com/MichLoverz/group4-final_project-computer_vision-fresh_fruitness_detection",
     notebook: "https://www.kaggle.com/code/michloverz/fruit-freshness-demo-comvis-group-4",
     presentation: "https://www.youtube.com/watch?v=0obijlGrcCE",
+    role: "Group project — final project",
     screen: "app-visual-for-comvis",
     featured: true,
   },
@@ -217,7 +242,7 @@ export const skills: { division: string; groups: SkillGroup[] }[] = [
       // TODO(michael): confirm the tools you actually use (video editor especially).
       { group: "Graphic", items: ["Adobe Photoshop", "Adobe Illustrator", "Packaging dielines", "Product catalogs", "Marketplace listings", "Instagram feeds & stories"] },
       { group: "UI/UX", items: ["Figma", "Mobile app flows", "Web layouts", "Prototyping"] },
-      { group: "Video", items: ["Short-form editing", "Adobe Premiere Pro", "CapCut"] },
+      { group: "Video", items: ["Short-form editing", "Adobe Premiere Pro", "Adobe After Effects"] },
     ],
   },
 ];

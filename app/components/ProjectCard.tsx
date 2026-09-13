@@ -29,7 +29,7 @@ function Thumb({ project }: { project: Project }) {
       <img
         src={src}
         alt={project.title}
-        className="h-full w-full object-cover object-top"
+        className="h-full w-full object-cover object-left-top"
       />
     );
   }
@@ -78,7 +78,11 @@ export default function ProjectCard({ project, index }: Props) {
 
         <h3
           className={`font-display mt-4 font-bold leading-none text-bone transition-colors group-hover:text-signal ${
-            featured ? "text-4xl md:text-5xl" : "text-3xl"
+            featured
+              ? project.title.length > 40
+                ? "text-3xl md:text-4xl" // long titles (papers) step down one size
+                : "text-4xl md:text-5xl"
+              : "text-3xl"
           }`}
         >
           {project.title}
@@ -144,6 +148,12 @@ export default function ProjectCard({ project, index }: Props) {
               See the design
             </Link>
           )}
+          {project.links?.map((l) => (
+            <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className={linkClass}>
+              <ExternalLinkIcon width={16} height={16} />
+              {l.label}
+            </a>
+          ))}
           {!project.repo && project.repoNote && (
             <span className="inline-flex items-center gap-2 text-sm text-ash">
               <GithubIcon width={14} height={14} />
@@ -151,6 +161,9 @@ export default function ProjectCard({ project, index }: Props) {
             </span>
           )}
         </div>
+        {project.demoNote && (
+          <p className="mt-3 max-w-prose text-sm leading-relaxed text-ash">{project.demoNote}</p>
+        )}
       </div>
     </article>
   );
