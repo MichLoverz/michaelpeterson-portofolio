@@ -13,7 +13,7 @@ export default function Projects() {
     <Section id="development" index="03" title="Development">
       <p className="mb-10 max-w-xl text-lg text-ash">
         {projects.length} projects across machine learning, computer vision,
-        mobile, and web. Source code is public for each one.
+        mobile, and web — from solo notebooks to a team product in production.
       </p>
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {ordered.map((project, i) => (

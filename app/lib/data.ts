@@ -42,13 +42,32 @@ export type Project = {
   tech: string[];
   role: string;
   repo?: string;
+  /** Shown instead of a repository link, e.g. when the source is private. */
+  repoNote?: string;
   demo?: string;
+  docs?: string;
+  /** Internal link to the matching design collection. */
+  design?: string;
   image?: string; // put screenshots in /public/projects and reference here
   featured?: boolean;
 };
 
 // Draft descriptions inferred from repository names — please correct.
 export const projects: Project[] = [
+  {
+    title: "PortfolioX",
+    category: "Web",
+    description:
+      "An investment portfolio platform — dashboard, simulation, optimisation, and risk profiling — built by a five-person team for Software Engineering and deployed to production. I owned the UI/UX, worked on the backend, and helped write the documentation.",
+    // TODO(michael): list the actual stack (framework, backend, database).
+    tech: ["Web app", "Vercel", "Figma"],
+    role: "Group project — UI/UX, backend, documentation",
+    repoNote: "Source lives in a private organisation repository",
+    demo: "https://portfoliox-se.vercel.app/",
+    docs: "https://app.notion.com/p/PORTFOLIOX-Software-Engineering-Project-Documentation-fb39690328d94aa1a3a35e884eeb1867",
+    design: "/design/portfoliox",
+    featured: true,
+  },
   {
     title: "Fresh Fruitness Detection",
     category: "AI / Machine Learning",
@@ -87,13 +106,15 @@ export const projects: Project[] = [
     repo: "https://github.com/MichLoverz/group6-energy-efficiency-prediction-assignmentml",
   },
   {
-    title: "ML Model Deployment (Streamlit)",
+    title: "Mr. Coffee (HTML)",
     category: "Web",
     description:
-      "An interactive Streamlit web app that serves a trained machine learning model, letting users enter inputs and get live predictions in the browser.",
-    tech: ["Python", "Streamlit"],
+      "A coffee-shop website coded by hand for the Human–Computer Interaction final project — homepage, about, per-category menu pages, promos, and an ordering flow — after designing it in Figma.",
+    tech: ["HTML", "CSS", "JavaScript"],
     role: "Individual project",
-    repo: "https://github.com/MichLoverz/streamlit-deployment",
+    // TODO(michael): push the code and add the repo URL, then remove repoNote.
+    repoNote: "Source not published yet",
+    design: "/design/mrcoffee-html",
   },
   {
     title: "Flutter Final Project",
@@ -114,15 +135,6 @@ export const projects: Project[] = [
     role: "Individual project",
     repo: "https://github.com/MichLoverz/LnT_Mid-Project-Flutter",
   },
-  {
-    title: "TPM Web App",
-    category: "Web",
-    description:
-      "A web application built with the Laravel framework and Blade templating.", // TODO(michael): describe what TPM actually does.
-    tech: ["Laravel", "PHP", "Blade"],
-    role: "Individual project",
-    repo: "https://github.com/MichLoverz/TPM",
-  },
 ];
 
 export type SkillGroup = { group: string; items: string[] };
@@ -136,7 +148,8 @@ export const skills: { division: string; groups: SkillGroup[] }[] = [
         items: ["Python", "scikit-learn", "pandas", "NumPy", "TensorFlow / Keras", "OpenCV", "Jupyter"],
       },
       { group: "Mobile", items: ["Flutter", "Dart"] },
-      { group: "Web", items: ["Laravel", "PHP", "Streamlit", "HTML / CSS", "JavaScript"] },
+      // TODO(michael): add the PortfolioX stack here once confirmed.
+      { group: "Web", items: ["HTML / CSS", "JavaScript"] },
       { group: "Tools", items: ["Git & GitHub", "VS Code", "Vercel"] },
     ],
   },

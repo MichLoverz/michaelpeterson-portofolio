@@ -56,6 +56,8 @@ export type Collection = {
   cover?: string;
   /** External design file, shown as a button on the collection page. */
   figma?: string;
+  /** Extra buttons on the collection page (live site, docs, related page). */
+  links?: { href: string; label: string }[];
 };
 
 export const collections: Collection[] = [
@@ -154,15 +156,57 @@ export const collections: Collection[] = [
     figma: "https://www.figma.com/design/wNal59Oi4BQqvtKc4y1eKd/PromoHub?node-id=0-1&t=WJ96XSAnhdGJ8Do8-1",
   },
   {
+    slug: "portfoliox",
+    group: "uiux",
+    title: "PortfolioX",
+    summary: "Investment portfolio platform — dashboard, simulation, optimisation, and risk profiling. Shipped to production.",
+    intro:
+      "Software Engineering group project, built and deployed as a real product. PortfolioX helps investors manage a portfolio, run simulations, optimise allocations, and profile their risk. I owned the UI/UX design, worked on the backend, and helped write the documentation. Desktop pages first, then the mobile layout.",
+    ratio: "portrait",
+    cover: "homepage-1",
+    figma: "https://www.figma.com/design/Iab0DNkJIKDZ4HHT1eIYFb/PORTOFOLIOX?node-id=0-1&t=sXpFrzlpnrPG9y5P-1",
+    links: [
+      { href: "https://portfoliox-se.vercel.app/", label: "Open live site" },
+      {
+        href: "https://app.notion.com/p/PORTFOLIOX-Software-Engineering-Project-Documentation-fb39690328d94aa1a3a35e884eeb1867",
+        label: "Read the documentation",
+      },
+    ],
+  },
+  {
+    slug: "aivi",
+    group: "uiux",
+    title: "AIVI",
+    summary: "AI health check-up analysis — landing, sign-in, and results dashboard.",
+    intro:
+      "AIVI reads a user's general check-up data — blood pressure, glucose, cholesterol — and returns instant, AI-generated health recommendations. Landing page, authentication, and the main results page, in light mode.",
+    ratio: "portrait",
+    cover: "landing",
+    figma: "https://www.figma.com/design/0J8k5zyqXkrCeyL0paKPHP/AIVI?node-id=0-1&t=mZSh7LaK4zz2sezC-1",
+  },
+  {
     slug: "mrcoffee",
     group: "uiux",
-    title: "Mr. Coffee",
-    summary: "Coffee shop website — menu, ordering, and a rewards program.",
+    title: "Mr. Coffee (Figma)",
+    summary: "Coffee shop website, pure Figma version — menu, ordering, and rewards.",
     intro:
-      "A website for a coffee shop: homepage, about page, menu, ordering flow with confirmation, and a rewards page with its pop-up states.",
+      "Human–Computer Interaction final project. The brief asked for two versions of the same coffee-shop website with deliberately different designs: this one is the pure Figma prototype — homepage, about, menu, ordering with confirmation, rewards with its pop-up states, and the component sheet. The second version was built in HTML.",
     ratio: "portrait",
     cover: "homepage",
     figma: "https://www.figma.com/design/HF0iNdOkwynnils0GUmC6n/Mr.-Coffee?node-id=0-1&t=iFdL6miEJ6P07REj-1",
+    links: [{ href: "/design/mrcoffee-html", label: "See the HTML version" }],
+  },
+  {
+    slug: "mrcoffee-html",
+    group: "uiux",
+    title: "Mr. Coffee (HTML)",
+    summary: "Coffee shop website, second version — designed in Figma and built with HTML, CSS, and JavaScript.",
+    intro:
+      "The second version from the same HCI final project, with its own design direction. This one went past the prototype: designed in Figma, then coded by hand in HTML, CSS, and JavaScript — homepage, about, per-category menu pages, promos, and the ordering flow.",
+    ratio: "portrait",
+    cover: "homepage",
+    figma: "https://www.figma.com/design/OBxRyVD43WWjfuHqyzY7QZ/Mr.-Coffee-HTML?node-id=0-1&t=P61Ic6s7A1B8vtdP-1",
+    links: [{ href: "/design/mrcoffee", label: "See the Figma version" }],
   },
 
   // --- Video --------------------------------------------------------------

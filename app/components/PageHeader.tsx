@@ -9,12 +9,15 @@ type Props = {
   title: string;
   intro?: string;
   meta?: string;
-  /** Optional external link rendered as a button (e.g. the Figma file). */
-  action?: { href: string; label: string };
+  /** Buttons under the intro — external links open in a new tab, internal ones navigate. */
+  actions?: { href: string; label: string }[];
 };
 
+const buttonClass =
+  "chamfer-sm font-display inline-flex items-center gap-2 border border-ash px-4 py-2 text-lg font-bold text-bone transition-colors hover:border-signal hover:text-signal";
+
 // Header for sub-pages (design index and collection pages).
-export default function PageHeader({ crumbs, index, title, intro, meta, action }: Props) {
+export default function PageHeader({ crumbs, index, title, intro, meta, actions = [] }: Props) {
   return (
     <header className="border-b border-steel">
       <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 md:px-12 md:pb-16 md:pt-14">
@@ -36,20 +39,31 @@ export default function PageHeader({ crumbs, index, title, intro, meta, action }
           </h1>
         </div>
 
-        {(intro || meta || action) && (
+        {(intro || meta || actions.length > 0) && (
           <div className="mt-6 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
             {intro && <p className="max-w-2xl text-lg leading-relaxed text-ash">{intro}</p>}
             <div className="flex flex-col gap-3 md:items-end">
-              {action && (
-                <a
-                  href={action.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="chamfer-sm font-display inline-flex items-center gap-2 border border-ash px-4 py-2 text-lg font-bold text-bone transition-colors hover:border-signal hover:text-signal"
-                >
-                  {action.label}
-                  <ExternalLinkIcon width={16} height={16} />
-                </a>
+              {actions.length > 0 && (
+                <div className="flex flex-wrap gap-2 md:justify-end">
+                  {actions.map((a) =>
+                    a.href.startsWith("/") ? (
+                      <Link key={a.href} href={a.href} className={buttonClass}>
+                        {a.label}
+                      </Link>
+                    ) : (
+                      <a
+                        key={a.href}
+                        href={a.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={buttonClass}
+                      >
+                        {a.label}
+                        <ExternalLinkIcon width={16} height={16} />
+                      </a>
+                    ),
+                  )}
+                </div>
               )}
               {meta && <p className="label md:text-right">{meta}</p>}
             </div>

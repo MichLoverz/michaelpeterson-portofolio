@@ -41,6 +41,8 @@ const QUALITY = 82;
 //                     cropped to their top, shorter ones are centred on a dark canvas
 //   match / exclude:  regex on the filename — only include / skip matching files
 //   square:           centre-crop non-square images to 1:1 (keeps a feed grid even)
+//   orderBy:          "name" (default) or "shape" — portrait canvases first, then
+//                     landscape; wider canvases first within each; then by name
 const SOURCES = [
   { dir: "Daily Health/Design Marketplace", brand: "Daily Health", collection: "marketplace", groupBySubfolder: true },
   { dir: "Daily Health/Katalog Product", brand: "Daily Health", collection: "catalog" },
@@ -54,8 +56,11 @@ const SOURCES = [
   { dir: "College/Design", brand: "BabyBloom", collection: "lorikeet", match: /lorikeet/i },
   { dir: "College/Design", brand: "BabyBloom", collection: "campus-design", exclude: /lorikeet/i },
   { dir: "College/UI UX Application/PantryHub", brand: "PantryHub", collection: "pantryhub", groupBySubfolder: true, rootGroup: "Brand" },
-  { dir: "College/UI UX Web/PromoHub", brand: "PromoHub", collection: "promohub", tallPages: 1.4, thumbAspect: [4, 5] },
-  { dir: "College/UI UX Web/Mr Coffee", brand: "Mr. Coffee", collection: "mrcoffee", tallPages: 1.4, thumbAspect: [4, 5] },
+  { dir: "College/UI UX Web/PromoHub", brand: "PromoHub", collection: "promohub", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
+  { dir: "College/UI UX Web/Mr Coffee", brand: "Mr. Coffee", collection: "mrcoffee", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
+  { dir: "College/UI UX Web/Mr Coffee HTML Version", brand: "Mr. Coffee", collection: "mrcoffee-html", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
+  { dir: "College/UI UX Web/PortfolioX", brand: "PortfolioX", collection: "portfoliox", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
+  { dir: "College/UI UX Web/AIVI", brand: "AIVI", collection: "aivi", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
 ];
 
 const CANVAS = { r: 27, g: 28, b: 31 }; // --graphite
@@ -76,6 +81,7 @@ const titleFromFilename = (file) => {
     .basename(file, path.extname(file))
     .replace(/^\d+(\.\d+)*\.\s*/, "") // leading "4. " / "5.1. " ordering prefix
     .replace(/\s*\(\d+\)\s*$/, "") // trailing " (1)" duplicate counter
+    .replace(/_/g, " ") // "SignIn_Light" -> "SignIn Light"
     .trim();
   return /^\d+$/.test(base) || base === "" ? null : base;
 };
@@ -121,6 +127,7 @@ async function main() {
       if (src.exclude && src.exclude.test(name)) return false;
       return true;
     });
+    const sourceItems = [];
     for (const file of files) {
       const rel = path.relative(dir, file);
       const inSubfolder = rel.includes(path.sep);
@@ -217,7 +224,7 @@ async function main() {
 
       const tagApplies = src.tag && (!src.tagIf || src.tagIf.test(path.basename(file)));
 
-      items.push({
+      sourceItems.push({
         id,
         collection: src.collection,
         brand: src.brand,
@@ -230,7 +237,21 @@ async function main() {
         thumb: toPublic(thumbPath),
         full: toPublic(fullPath),
         mtime: mtimeMs,
+        _name: path.basename(file),
       });
+    }
+
+    if (src.orderBy === "shape") {
+      sourceItems.sort(
+        (a, b) =>
+          Number(b.height >= b.width) - Number(a.height >= a.width) || // portrait first
+          b.width - a.width || // wider canvas first
+          a._name.localeCompare(b._name, undefined, { numeric: true }),
+      );
+    }
+    for (const it of sourceItems) {
+      delete it._name;
+      items.push(it);
     }
   }
 

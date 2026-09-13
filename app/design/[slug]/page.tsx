@@ -77,11 +77,10 @@ export default async function CollectionPage({ params }: PageProps<"/design/[slu
             title={collection.title}
             intro={collection.intro}
             meta={[`${countFor(collection.slug)} pieces`, ...brands].join(" / ")}
-            action={
-              collection.figma
-                ? { href: collection.figma, label: "Open in Figma" }
-                : undefined
-            }
+            actions={[
+              ...(collection.figma ? [{ href: collection.figma, label: "Open in Figma" }] : []),
+              ...(collection.links ?? []),
+            ]}
           />
 
           <div className="mx-auto max-w-7xl px-5 py-12 md:px-12 md:py-16">

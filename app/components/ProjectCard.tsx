@@ -1,16 +1,29 @@
+import Link from "next/link";
 import type { Project } from "@/app/lib/data";
+import { collectionBySlug, coverFor } from "@/app/lib/design";
 import { ExternalLinkIcon, GithubIcon } from "./icons";
+
+// A project without its own screenshot borrows the cover of its design collection.
+function fallbackImage(project: Project): string | undefined {
+  if (project.image || !project.design) return project.image;
+  const c = collectionBySlug(project.design.split("/").pop() ?? "");
+  return c ? coverFor(c)?.thumb : undefined;
+}
+
+const linkClass =
+  "font-display inline-flex items-center gap-2 text-lg font-bold text-bone transition-colors hover:text-signal";
 
 type Props = { project: Project; index: number };
 
 function Thumb({ project }: { project: Project }) {
-  if (project.image) {
+  const src = fallbackImage(project);
+  if (src) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={project.image}
+        src={src}
         alt={project.title}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover object-top"
       />
     );
   }
@@ -75,28 +88,35 @@ export default function ProjectCard({ project, index }: Props) {
           <span className="ml-auto text-sm text-ash">{project.role}</span>
         </div>
 
-        <div className="mt-5 flex gap-5">
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
+          {project.demo && (
+            <a href={project.demo} target="_blank" rel="noreferrer" className={linkClass}>
+              <ExternalLinkIcon width={16} height={16} />
+              Open live site
+            </a>
+          )}
           {project.repo && (
-            <a
-              href={project.repo}
-              target="_blank"
-              rel="noreferrer"
-              className="font-display inline-flex items-center gap-2 text-lg font-bold text-bone transition-colors hover:text-signal"
-            >
+            <a href={project.repo} target="_blank" rel="noreferrer" className={linkClass}>
               <GithubIcon width={16} height={16} />
               Open repository
             </a>
           )}
-          {project.demo && (
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noreferrer"
-              className="font-display inline-flex items-center gap-2 text-lg font-bold text-bone transition-colors hover:text-signal"
-            >
+          {project.docs && (
+            <a href={project.docs} target="_blank" rel="noreferrer" className={linkClass}>
               <ExternalLinkIcon width={16} height={16} />
-              Open live demo
+              Documentation
             </a>
+          )}
+          {project.design && (
+            <Link href={project.design} className={linkClass}>
+              See the design
+            </Link>
+          )}
+          {!project.repo && project.repoNote && (
+            <span className="inline-flex items-center gap-2 text-sm text-ash">
+              <GithubIcon width={14} height={14} />
+              {project.repoNote}
+            </span>
           )}
         </div>
       </div>
