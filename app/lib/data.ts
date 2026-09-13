@@ -37,7 +37,9 @@ export const profile = {
 
 export type Project = {
   title: string;
-  category: "AI / Machine Learning" | "Mobile" | "Web";
+  /** URL segment for the detail page (only used when `gallery` is set). */
+  slug?: string;
+  category: "AI / Machine Learning" | "Mobile" | "Web" | "Networking";
   description: string;
   tech: string[];
   role: string;
@@ -46,9 +48,22 @@ export type Project = {
   repoNote?: string;
   demo?: string;
   docs?: string;
+  /** Kaggle / Colab notebook. */
+  notebook?: string;
+  /** Recorded presentation (YouTube). */
+  presentation?: string;
+  /** Written report, e.g. a Drive folder with the PDF. */
+  report?: string;
   /** Internal link to the matching design collection. */
   design?: string;
-  image?: string; // put screenshots in /public/projects and reference here
+  /** Explicit screenshot path in /public, or… */
+  image?: string;
+  /** …a filename fragment matched in "Portofolio (by Folder)/College" (npm run gallery). */
+  screen?: string;
+  /** Gallery collection slug for a detail page at /development/<slug>. */
+  gallery?: string;
+  /** Intro text on the detail page. */
+  galleryIntro?: string;
   featured?: boolean;
 };
 
@@ -68,41 +83,68 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    title: "Campus Network Design",
+    slug: "campus-network",
+    category: "Networking",
+    description:
+      "A complete network for the three-floor Binus Syahdan campus, designed in Cisco Packet Tracer from the actual floor plans: sizing the number of PCs per room, choosing routers and switches, planning the IP addressing, and wiring it all into one working topology with a server block. Documented in a 90-page final report.",
+    // TODO(michael): add the protocols you configured (VLAN, DHCP, OSPF, NAT…).
+    tech: ["Cisco Packet Tracer", "Routing & switching", "IP addressing", "Network topology"],
+    role: "Computer Networks — course project",
+    report: "https://drive.google.com/drive/folders/1AKSZ7gXvFmKJdwovZu1ONI8qjAWsRjvX?usp=drive_link",
+    screen: "overall",
+    gallery: "cisco",
+    galleryIntro:
+      "From floor plan to topology. The building's floor plans set the room count and PC count per room; the Packet Tracer screenshots show how each floor is wired and how the floors meet at the core and the server block. The .pkt file and the full report — device list, IP tables, and configuration — are in the Drive folder.",
+    featured: true,
+  },
+  {
     title: "Fresh Fruitness Detection",
     category: "AI / Machine Learning",
     description:
-      "A computer-vision model that classifies fruit as fresh or spoiled from images, built to explore image classification for food-quality screening.",
-    tech: ["Python", "Jupyter", "TensorFlow / Keras", "OpenCV"],
+      "A computer-vision model that classifies fruit as fresh or spoiled from images, trained and evaluated in a Kaggle notebook and wrapped in a small demo app for the final presentation (the app's interface was scaffolded with AI assistance).",
+    tech: ["Python", "TensorFlow / Keras", "OpenCV", "Kaggle"],
     role: "Group project (Group 4)",
     repo: "https://github.com/MichLoverz/group4-final_project-computer_vision-fresh_fruitness_detection",
+    notebook: "https://www.kaggle.com/code/michloverz/fruit-freshness-demo-comvis-group-4",
+    presentation: "https://www.youtube.com/watch?v=0obijlGrcCE",
+    screen: "app-visual-for-comvis",
     featured: true,
   },
   {
     title: "Wine Quality Prediction",
     category: "AI / Machine Learning",
     description:
-      "A machine learning model that predicts wine quality scores from physicochemical properties, comparing several classifiers and feature-engineering approaches.",
-    tech: ["Python", "scikit-learn", "pandas"],
-    role: "Group project (Group 4)",
+      "A machine learning model that predicts wine quality scores from physicochemical properties, comparing several classifiers and feature-engineering approaches, deployed as a Streamlit app.",
+    tech: ["Python", "scikit-learn", "pandas", "Streamlit"],
+    role: "Group project (Group 4) — final project",
     repo: "https://github.com/MichLoverz/group4-final-project_wine-quality-prediction",
-  },
-  {
-    title: "Real Estate Price Prediction",
-    category: "AI / Machine Learning",
-    description:
-      "A regression model estimating property prices from housing features, with data cleaning, exploratory analysis, and model evaluation.",
-    tech: ["Python", "scikit-learn", "pandas"],
-    role: "Group project (Group 6)",
-    repo: "https://github.com/MichLoverz/group6-real-estate-prediction-assignmentml",
+    demo: "https://group4-final-projectwine-quality-prediction-3kv3iqqqyhrswhl85b.streamlit.app/",
+    presentation: "https://www.youtube.com/watch?v=hbMp0QXjsAA",
+    screen: "wine-quality",
   },
   {
     title: "Energy Efficiency Prediction",
     category: "AI / Machine Learning",
     description:
-      "A predictive model for building energy efficiency (heating and cooling load) based on architectural parameters.",
-    tech: ["Python", "scikit-learn", "pandas"],
-    role: "Group project (Group 6)",
+      "A predictive model for building energy efficiency (heating and cooling load) based on architectural parameters, deployed as a Streamlit app.",
+    tech: ["Python", "scikit-learn", "pandas", "Streamlit"],
+    role: "Group project (Group 6) — assignment",
     repo: "https://github.com/MichLoverz/group6-energy-efficiency-prediction-assignmentml",
+    demo: "https://group6-energy-efficiency-prediction-assignmentml.streamlit.app/",
+    presentation: "https://www.youtube.com/watch?v=EFL0GWGbCok",
+    screen: "energy-efficiency",
+  },
+  {
+    title: "Real Estate Price Prediction",
+    category: "AI / Machine Learning",
+    description:
+      "A regression model estimating property prices from housing features, with data cleaning, exploratory analysis, and model evaluation. Built on my own initiative beyond the course assignments.",
+    tech: ["Python", "scikit-learn", "pandas", "Streamlit"],
+    role: "Self-initiated",
+    repo: "https://github.com/MichLoverz/group6-real-estate-prediction-assignmentml",
+    demo: "https://group6-real-estate-prediction-assignmentml.streamlit.app/",
+    screen: "real-estate",
   },
   {
     title: "Mr. Coffee (HTML)",

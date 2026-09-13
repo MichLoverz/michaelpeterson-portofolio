@@ -330,4 +330,16 @@ export function itemTitle(item: GalleryItem, index: number): string {
   return item.title ?? `${item.brand} ${String(index + 1).padStart(2, "0")}`;
 }
 
-export const totalDesignPieces = items.length + videos.length;
+/** Only the design division's collections — development screens live in the same manifest. */
+export const totalDesignPieces =
+  collections.reduce((n, c) => n + (c.slug === "video" ? 0 : itemsFor(c.slug).length), 0) +
+  videos.length;
+
+/** Screenshot for a development project card: matched by filename in the given collections. */
+export function screenFor(match: string, collections: string[] = ["dev-screens"]): GalleryItem | undefined {
+  for (const slug of collections) {
+    const hit = itemsFor(slug).find((i) => i.full.includes(match));
+    if (hit) return hit;
+  }
+  return undefined;
+}

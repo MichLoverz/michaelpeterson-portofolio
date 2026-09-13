@@ -39,11 +39,19 @@ const QUALITY = 82;
 //                     lightbox then scrolls it instead of shrinking it to fit
 //   thumbAspect:      [w, h] — every thumb gets this shape: taller images are
 //                     cropped to their top, shorter ones are centred on a dark canvas
+//   thumbFit:         "contain" — never crop; always fit the whole image on the canvas
 //   match / exclude:  regex on the filename — only include / skip matching files
 //   square:           centre-crop non-square images to 1:1 (keeps a feed grid even)
 //   orderBy:          "name" (default) or "shape" — portrait canvases first, then
 //                     landscape; wider canvases first within each; then by name
+//   recursive:        false to take only the folder's own files (default: true)
 const SOURCES = [
+  // --- Development (screens for project cards and detail pages) ------------
+  { dir: "College", brand: "Campus", collection: "dev-screens", recursive: false },
+  // Floor plans ("Denah Lantai n") sort before the Packet Tracer screenshots by name.
+  { dir: "College/Cisco Packet Tracer", brand: "Campus Network", collection: "cisco", thumbAspect: [16, 10], thumbFit: "contain" },
+
+  // --- Design ---------------------------------------------------------------
   { dir: "Daily Health/Design Marketplace", brand: "Daily Health", collection: "marketplace", groupBySubfolder: true },
   { dir: "Daily Health/Katalog Product", brand: "Daily Health", collection: "catalog" },
   { dir: "Daily Health/Design Product", brand: "Daily Health", collection: "packaging" },
@@ -87,13 +95,14 @@ const titleFromFilename = (file) => {
   return /^\d+$/.test(base) || base === "" ? null : base;
 };
 
-async function listImages(dir) {
+async function listImages(dir, recursive = true) {
   const entries = await readdir(dir, { withFileTypes: true });
   const files = [];
   for (const e of entries) {
     const full = path.join(dir, e.name);
-    if (e.isDirectory()) files.push(...(await listImages(full)));
-    else if (IMAGE_EXT.has(path.extname(e.name).toLowerCase())) files.push(full);
+    if (e.isDirectory()) {
+      if (recursive) files.push(...(await listImages(full)));
+    } else if (IMAGE_EXT.has(path.extname(e.name).toLowerCase())) files.push(full);
   }
   return files.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }
@@ -122,7 +131,7 @@ async function main() {
       continue;
     }
 
-    const files = (await listImages(dir)).filter((f) => {
+    const files = (await listImages(dir, src.recursive !== false)).filter((f) => {
       const name = path.basename(f);
       if (src.match && !src.match.test(name)) return false;
       if (src.exclude && src.exclude.test(name)) return false;
@@ -201,7 +210,7 @@ async function main() {
         if (src.thumbAspect) {
           const [aw, ah] = src.thumbAspect;
           const targetH = Math.round((width * ah) / aw);
-          if (height > targetH) {
+          if (height > targetH && src.thumbFit !== "contain") {
             await thumb
               .extract({ left: 0, top: 0, width, height: targetH })
               .resize({ width: THUMB_MAX, withoutEnlargement: true })

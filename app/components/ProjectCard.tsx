@@ -1,22 +1,28 @@
 import Link from "next/link";
 import type { Project } from "@/app/lib/data";
-import { collectionBySlug, coverFor } from "@/app/lib/design";
+import { collectionBySlug, coverFor, screenFor } from "@/app/lib/design";
 import { ExternalLinkIcon, GithubIcon } from "./icons";
-
-// A project without its own screenshot borrows the cover of its design collection.
-function fallbackImage(project: Project): string | undefined {
-  if (project.image || !project.design) return project.image;
-  const c = collectionBySlug(project.design.split("/").pop() ?? "");
-  return c ? coverFor(c)?.thumb : undefined;
-}
 
 const linkClass =
   "font-display inline-flex items-center gap-2 text-lg font-bold text-bone transition-colors hover:text-signal";
 
-type Props = { project: Project; index: number };
+// Card image, in order of preference: explicit path, a screenshot from the
+// College folder, or the cover of the project's design collection.
+export function projectImage(project: Project): string | undefined {
+  if (project.image) return project.image;
+  if (project.screen) {
+    const hit = screenFor(project.screen, ["dev-screens", ...(project.gallery ? [project.gallery] : [])]);
+    if (hit) return hit.thumb;
+  }
+  if (project.design) {
+    const c = collectionBySlug(project.design.split("/").pop() ?? "");
+    return c ? coverFor(c)?.thumb : undefined;
+  }
+  return undefined;
+}
 
 function Thumb({ project }: { project: Project }) {
-  const src = fallbackImage(project);
+  const src = projectImage(project);
   if (src) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
@@ -34,6 +40,8 @@ function Thumb({ project }: { project: Project }) {
   );
 }
 
+type Props = { project: Project; index: number };
+
 export default function ProjectCard({ project, index }: Props) {
   const featured = project.featured;
   const num = String(index + 1).padStart(2, "0");
@@ -46,11 +54,12 @@ export default function ProjectCard({ project, index }: Props) {
           : "flex-col"
       }`}
     >
-      {/* Thumbnail */}
+      {/* Thumbnail — featured cards cap the image at 4:3 so the text column
+          never floats in empty space; the image is cropped from the top. */}
       <div
         className={`relative shrink-0 border-steel ${
           featured
-            ? "aspect-video border-b md:aspect-auto md:w-[46%] md:border-b-0 md:border-r"
+            ? "aspect-video border-b md:aspect-[4/3] md:w-[46%] md:border-b-0 md:border-r"
             : "aspect-video border-b"
         }`}
       >
@@ -89,16 +98,39 @@ export default function ProjectCard({ project, index }: Props) {
         </div>
 
         <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
+          {project.gallery && project.slug && (
+            <Link href={`/development/${project.slug}`} className={linkClass}>
+              See the build
+            </Link>
+          )}
           {project.demo && (
             <a href={project.demo} target="_blank" rel="noreferrer" className={linkClass}>
               <ExternalLinkIcon width={16} height={16} />
-              Open live site
+              Open live app
             </a>
           )}
           {project.repo && (
             <a href={project.repo} target="_blank" rel="noreferrer" className={linkClass}>
               <GithubIcon width={16} height={16} />
               Open repository
+            </a>
+          )}
+          {project.notebook && (
+            <a href={project.notebook} target="_blank" rel="noreferrer" className={linkClass}>
+              <ExternalLinkIcon width={16} height={16} />
+              Open notebook
+            </a>
+          )}
+          {project.presentation && (
+            <a href={project.presentation} target="_blank" rel="noreferrer" className={linkClass}>
+              <ExternalLinkIcon width={16} height={16} />
+              Watch the presentation
+            </a>
+          )}
+          {project.report && (
+            <a href={project.report} target="_blank" rel="noreferrer" className={linkClass}>
+              <ExternalLinkIcon width={16} height={16} />
+              Final report
             </a>
           )}
           {project.docs && (
