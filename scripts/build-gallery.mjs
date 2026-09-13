@@ -23,22 +23,35 @@ const MANIFEST = path.join(ROOT, "app", "lib", "gallery.json");
 
 const THUMB_MAX = 900; // longest edge, px — grid tiles
 const FULL_MAX = 1800; // longest edge, px — lightbox
+const TALL_RATIO = 2.4; // height/width above this = "tall page" (full-page web screenshot)
+const TALL_FULL_WIDTH = 1600; // tall pages are sized by width so they stay readable
 const QUALITY = 82;
 
-// Maps "<brand>/<subfolder>" in the source tree to a collection slug.
-// Anything not listed here is skipped (e.g. videos, PDFs).
+// Maps a folder in the source tree to a collection slug. Anything not listed
+// here is skipped (e.g. videos, PDFs).
+//   dir:              folder, relative to "Portofolio (by Folder)"
+//   brand:            client / project label shown on the site
+//   groupBySubfolder: first-level sub-folder becomes the item's group
+//   rootGroup:        group name for files sitting at the folder root (with groupBySubfolder)
+//   tag:              free-form marker (e.g. "puzzle-grid" renders 2x2 in the grid)
+//   tagIf:            regex on the filename that applies `tag` only to matching files
+//   tallPages:        full-page screenshots — thumbs crop to the top, lightbox scrolls
 const SOURCES = [
-  { brand: "Daily Health", folder: "Design Marketplace", collection: "marketplace", groupBySubfolder: true },
-  { brand: "Daily Health", folder: "Katalog Product", collection: "catalog" },
-  { brand: "Daily Health", folder: "Design Product", collection: "packaging" },
-  { brand: "Daily Health", folder: "Instagram Feeds", collection: "instagram-feeds" },
-  { brand: "Gykaco", folder: "Instagram Feeds", collection: "instagram-feeds" },
-  { brand: "Gykaco", folder: "Lorikeet", collection: "instagram-feeds", tag: "puzzle-grid" },
-  { brand: "Daily Health", folder: "Instagram Story", collection: "instagram-stories" },
-  { brand: "Gykaco", folder: "Instagram Story", collection: "instagram-stories" },
+  { dir: "Daily Health/Design Marketplace", brand: "Daily Health", collection: "marketplace", groupBySubfolder: true },
+  { dir: "Daily Health/Katalog Product", brand: "Daily Health", collection: "catalog" },
+  { dir: "Daily Health/Design Product", brand: "Daily Health", collection: "packaging" },
+  { dir: "Daily Health/Instagram Feeds", brand: "Daily Health", collection: "instagram-feeds" },
+  { dir: "Gykaco/Instagram Feeds", brand: "Gykaco", collection: "instagram-feeds" },
+  { dir: "Gykaco/Lorikeet", brand: "Gykaco", collection: "instagram-feeds", tag: "puzzle-grid" },
+  { dir: "Global Cool", brand: "Global Cool", collection: "instagram-feeds" },
+  { dir: "Daily Health/Instagram Story", brand: "Daily Health", collection: "instagram-stories" },
+  { dir: "Gykaco/Instagram Story", brand: "Gykaco", collection: "instagram-stories" },
+  { dir: "College/Design", brand: "BabyBloom", collection: "campus-design", tag: "puzzle-grid", tagIf: /lorikeet/i },
+  { dir: "College/UI UX Application/PantryHub", brand: "PantryHub", collection: "pantryhub", groupBySubfolder: true, rootGroup: "Brand" },
+  { dir: "College/UI UX Web/PromoHub", brand: "PromoHub", collection: "promohub", tallPages: true },
 ];
 
-const IMAGE_EXT = new Set([".png", ".jpg", ".jpeg", ".webp"]);
+const IMAGE_EXT = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif"]);
 
 const slugify = (s) =>
   s
@@ -46,11 +59,16 @@ const slugify = (s) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-// "Colostrum 30 Tablet (1).png" -> "Colostrum 30 Tablet"
-// "1677723121859.png"           -> null (timestamp export, no real title)
+// "Colostrum 30 Tablet (1).png"      -> "Colostrum 30 Tablet"
+// "5.1. Resep Menu (Tampilan Utama)" -> "Resep Menu (Tampilan Utama)"
+// "1677723121859.png"                -> null (timestamp export, no real title)
 const titleFromFilename = (file) => {
-  const base = path.basename(file, path.extname(file)).replace(/\s*\(\d+\)\s*$/, "").trim();
-  return /^\d+$/.test(base) ? null : base;
+  const base = path
+    .basename(file, path.extname(file))
+    .replace(/^\d+(\.\d+)*\.\s*/, "") // leading "4. " / "5.1. " ordering prefix
+    .replace(/\s*\(\d+\)\s*$/, "") // trailing " (1)" duplicate counter
+    .trim();
+  return /^\d+$/.test(base) || base === "" ? null : base;
 };
 
 async function listImages(dir) {
@@ -82,18 +100,24 @@ async function main() {
   let reused = 0;
 
   for (const src of SOURCES) {
-    const dir = path.join(SOURCE, src.brand, src.folder);
+    const dir = path.join(SOURCE, src.dir);
     if (!existsSync(dir)) {
-      console.warn(`skip (missing): ${src.brand}/${src.folder}`);
+      console.warn(`skip (missing): ${src.dir}`);
       continue;
     }
 
     const files = await listImages(dir);
     for (const file of files) {
       const rel = path.relative(dir, file);
-      const group = src.groupBySubfolder && rel.includes(path.sep) ? rel.split(path.sep)[0] : null;
-      const id = createHash("md5").update(`${src.brand}/${src.folder}/${rel}`).digest("hex").slice(0, 10);
+      const inSubfolder = rel.includes(path.sep);
+      const group = src.groupBySubfolder
+        ? inSubfolder
+          ? rel.split(path.sep)[0]
+          : (src.rootGroup ?? null)
+        : null;
+      const id = createHash("md5").update(`${src.dir}/${rel}`).digest("hex").slice(0, 10);
       const { mtimeMs } = await stat(file);
+      const isGif = path.extname(file).toLowerCase() === ".gif";
 
       const outBase = path.join(
         OUT_DIR,
@@ -106,28 +130,50 @@ async function main() {
       const toPublic = (p) => "/" + path.relative(path.join(ROOT, "public"), p).split(path.sep).join("/");
 
       const prev = previous[id];
-      let width, height;
+      let width, height, tall;
       if (prev && prev.mtime === mtimeMs && existsSync(thumbPath) && existsSync(fullPath)) {
-        ({ width, height } = prev);
+        ({ width, height, tall } = prev);
         reused++;
       } else {
         await mkdir(path.dirname(outBase), { recursive: true });
-        const image = sharp(file, { failOn: "none" });
-        const meta = await image.metadata();
+        const meta = await sharp(file, { failOn: "none" }).metadata();
         width = meta.width;
-        height = meta.height;
-        await image
-          .clone()
-          .resize({ width: FULL_MAX, height: FULL_MAX, fit: "inside", withoutEnlargement: true })
-          .webp({ quality: QUALITY })
-          .toFile(fullPath);
-        await image
-          .clone()
-          .resize({ width: THUMB_MAX, height: THUMB_MAX, fit: "inside", withoutEnlargement: true })
-          .webp({ quality: QUALITY })
-          .toFile(thumbPath);
+        height = meta.pageHeight ?? meta.height; // animated GIFs report the stacked height
+        tall = Boolean(src.tallPages) || height / width > TALL_RATIO;
+
+        // Full-size copy. Tall pages are sized by width so text stays readable;
+        // animated GIFs keep their animation.
+        const full = sharp(file, { failOn: "none", animated: isGif });
+        if (tall) {
+          await full
+            .resize({ width: TALL_FULL_WIDTH, withoutEnlargement: true })
+            .webp({ quality: QUALITY })
+            .toFile(fullPath);
+        } else {
+          await full
+            .resize({ width: FULL_MAX, height: FULL_MAX, fit: "inside", withoutEnlargement: true })
+            .webp({ quality: QUALITY })
+            .toFile(fullPath);
+        }
+
+        // Thumbnail. Tall pages are cropped to their top 4:5 so the grid stays even.
+        const thumb = sharp(file, { failOn: "none" });
+        if (tall) {
+          await thumb
+            .extract({ left: 0, top: 0, width, height: Math.round((width * 5) / 4) })
+            .resize({ width: THUMB_MAX, withoutEnlargement: true })
+            .webp({ quality: QUALITY })
+            .toFile(thumbPath);
+        } else {
+          await thumb
+            .resize({ width: THUMB_MAX, height: THUMB_MAX, fit: "inside", withoutEnlargement: true })
+            .webp({ quality: QUALITY })
+            .toFile(thumbPath);
+        }
         converted++;
       }
+
+      const tagApplies = src.tag && (!src.tagIf || src.tagIf.test(path.basename(file)));
 
       items.push({
         id,
@@ -135,9 +181,10 @@ async function main() {
         brand: src.brand,
         group,
         title: titleFromFilename(file),
-        tag: src.tag ?? null,
+        tag: tagApplies ? src.tag : null,
         width,
         height,
+        tall: Boolean(tall),
         thumb: toPublic(thumbPath),
         full: toPublic(fullPath),
         mtime: mtimeMs,

@@ -143,10 +143,10 @@ export const skills: { division: string; groups: SkillGroup[] }[] = [
   {
     division: "Design",
     groups: [
-      // TODO(michael): confirm the tools you actually use.
-      { group: "Tools", items: ["Adobe Photoshop", "Adobe Illustrator", "Figma"] },
-      { group: "Print", items: ["Packaging dielines", "Product catalogs"] },
-      { group: "Digital", items: ["Marketplace listings", "Instagram feeds & stories", "Short-form video"] },
+      // TODO(michael): confirm the tools you actually use (video editor especially).
+      { group: "Graphic", items: ["Adobe Photoshop", "Adobe Illustrator", "Packaging dielines", "Product catalogs", "Marketplace listings", "Instagram feeds & stories"] },
+      { group: "UI/UX", items: ["Figma", "Mobile app flows", "Web layouts", "Prototyping"] },
+      { group: "Video", items: ["Short-form editing", "Adobe Premiere Pro", "CapCut"] },
     ],
   },
 ];

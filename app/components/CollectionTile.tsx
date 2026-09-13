@@ -3,11 +3,19 @@ import {
   brandsFor,
   countFor,
   coverFor,
+  videoCover,
   type Collection,
 } from "@/app/lib/design";
 
 export default function CollectionTile({ collection }: { collection: Collection }) {
-  const cover = coverFor(collection);
+  const isVideo = collection.slug === "video";
+  const image = coverFor(collection);
+  const cover = isVideo
+    ? (() => {
+        const src = videoCover();
+        return src ? { thumb: src, width: 480, height: 360 } : undefined;
+      })()
+    : image;
   const count = countFor(collection.slug);
   const brands = brandsFor(collection.slug);
 
@@ -42,7 +50,8 @@ export default function CollectionTile({ collection }: { collection: Collection 
           {collection.title}
         </h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-ash">{collection.summary}</p>
-        {brands.length > 0 && (
+        {/* Client / project labels — skipped when they'd just repeat the title. */}
+        {brands.length > 0 && brands.join(" / ").toLowerCase() !== collection.title.toLowerCase() && (
           <p className="label mt-4">{brands.join(" / ")}</p>
         )}
       </div>

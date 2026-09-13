@@ -10,9 +10,10 @@ import {
   brandsFor,
   collectionBySlug,
   collections,
+  collectionsIn,
   countFor,
   itemsFor,
-  videos,
+  videoGroups,
 } from "../../lib/design";
 
 export function generateStaticParams() {
@@ -34,18 +35,29 @@ export default async function CollectionPage({ params }: PageProps<"/design/[slu
   const collection = collectionBySlug(slug);
   if (!collection) notFound();
 
-  const index = String(collections.indexOf(collection) + 1).padStart(2, "0");
+  // "04.<group letter><n>" — e.g. 04.A3 for the third graphic-design collection.
+  const siblings = collectionsIn(collection.group);
+  const groupLetter = { graphic: "A", uiux: "B", video: "C" }[collection.group];
+  const index = `04.${groupLetter}${siblings.indexOf(collection) + 1}`;
+
   const items = itemsFor(collection.slug);
   const brands = brandsFor(collection.slug);
 
-  // Group by product sub-folder when the manifest provides one.
-  const groups = [...new Set(items.map((i) => i.group).filter(Boolean))] as string[];
+  // Group by sub-folder when the manifest provides one; ungrouped items and a
+  // "Brand" group (logo, identity) come first.
+  const groups = ([...new Set(items.map((i) => i.group).filter(Boolean))] as string[]).sort(
+    (a, b) => Number(b === "Brand") - Number(a === "Brand"),
+  );
+  const ungrouped = items.filter((i) => !i.group);
   const sections =
     groups.length > 0
-      ? groups.map((g) => ({ label: g, items: items.filter((i) => i.group === g) }))
+      ? [
+          ...(ungrouped.length ? [{ label: null, items: ungrouped }] : []),
+          ...groups.map((g) => ({ label: g, items: items.filter((i) => i.group === g) })),
+        ]
       : [{ label: null, items }];
 
-  // Previous / next collection for footer navigation.
+  // Previous / next across the whole design division.
   const at = collections.indexOf(collection);
   const prev = collections[(at - 1 + collections.length) % collections.length];
   const next = collections[(at + 1) % collections.length];
@@ -61,17 +73,26 @@ export default async function CollectionPage({ params }: PageProps<"/design/[slu
               { href: "/design", label: "Design" },
               { href: `/design/${collection.slug}`, label: collection.title },
             ]}
-            index={`04.${index}`}
+            index={index}
             title={collection.title}
             intro={collection.intro}
             meta={[`${countFor(collection.slug)} pieces`, ...brands].join(" / ")}
+            action={
+              collection.figma
+                ? { href: collection.figma, label: "Open in Figma" }
+                : undefined
+            }
           />
 
           <div className="mx-auto max-w-7xl px-5 py-12 md:px-12 md:py-16">
             {collection.slug === "video" ? (
-              <VideoGrid videos={videos} />
+              <VideoGrid groups={videoGroups} />
             ) : (
-              <Gallery sections={sections} ratio={collection.ratio} />
+              <Gallery
+                sections={sections}
+                ratio={collection.ratio}
+                captions={collection.group === "uiux"}
+              />
             )}
           </div>
 

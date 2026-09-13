@@ -16,12 +16,35 @@ export type GalleryItem = {
   tag: string | null;
   width: number;
   height: number;
+  /** Full-page screenshot: thumb is cropped to the top, lightbox scrolls. */
+  tall: boolean;
   thumb: string;
   full: string;
 };
 
+export type CollectionGroup = "graphic" | "uiux" | "video";
+
+export const collectionGroups: { id: CollectionGroup; title: string; summary: string }[] = [
+  {
+    id: "graphic",
+    title: "Graphic design",
+    summary: "Print and digital visuals for consumer brands.",
+  },
+  {
+    id: "uiux",
+    title: "UI/UX design",
+    summary: "App and web interfaces designed in Figma.",
+  },
+  {
+    id: "video",
+    title: "Video editing",
+    summary: "Short-form social videos and longer edits.",
+  },
+];
+
 export type Collection = {
   slug: string;
+  group: CollectionGroup;
   title: string;
   /** One line under the title on the overview tile. */
   summary: string;
@@ -31,11 +54,15 @@ export type Collection = {
   ratio: "square" | "portrait" | "story" | "wide" | "video";
   /** Substring of the file path used as the overview cover; defaults to the first item. */
   cover?: string;
+  /** External design file, shown as a button on the collection page. */
+  figma?: string;
 };
 
 export const collections: Collection[] = [
+  // --- Graphic design -----------------------------------------------------
   {
     slug: "marketplace",
+    group: "graphic",
     title: "Marketplace listings",
     summary: "Product image sets for Shopee and Tokopedia storefronts.",
     intro:
@@ -45,6 +72,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "catalog",
+    group: "graphic",
     title: "Product catalog",
     summary: "Single-page product sheets for the full supplement range.",
     intro:
@@ -54,6 +82,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "packaging",
+    group: "graphic",
     title: "Packaging",
     summary: "Print-ready dielines for supplement boxes.",
     intro:
@@ -62,15 +91,17 @@ export const collections: Collection[] = [
   },
   {
     slug: "instagram-feeds",
+    group: "graphic",
     title: "Instagram feeds",
     summary: "Campaign posts, holiday greetings, and a nine-tile puzzle grid.",
     intro:
-      "Feed posts for two brands: seasonal greetings and recruitment posts for a supplement company, and sale campaigns for a fashion label — including a nine-tile puzzle grid that reads as one image on the profile.",
+      "Feed posts for three brands: seasonal greetings and recruitment posts for a supplement company, sale campaigns for a fashion label — including a nine-tile puzzle grid that reads as one image on the profile — and promos for a retail store.",
     ratio: "square",
     cover: "lorikeet",
   },
   {
     slug: "instagram-stories",
+    group: "graphic",
     title: "Instagram stories",
     summary: "Vertical story graphics for campaigns and holidays.",
     intro:
@@ -78,31 +109,90 @@ export const collections: Collection[] = [
     ratio: "story",
   },
   {
-    slug: "video",
-    title: "Video",
-    summary: "Short-form product videos for social media.",
+    slug: "campus-design",
+    group: "graphic",
+    title: "Campus design work",
+    summary: "Brand concept, infographic, and social grid for a university project.",
     intro:
-      "Short vertical videos for a fashion label's social channels — product reveals, style picks, and campaign teasers.",
+      "Design pieces from coursework. BabyBloom is a digital parenting-education brand concept: a business infographic (SDG focus, mind map, value proposition canvas) and a nine-tile Instagram puzzle grid.",
+    ratio: "wide",
+    cover: "infographic",
+  },
+
+  // --- UI/UX design -------------------------------------------------------
+  {
+    slug: "pantryhub",
+    group: "uiux",
+    title: "PantryHub",
+    summary: "Mobile app for household pantry stock, recipes, and grocery ordering — four user roles.",
+    intro:
+      "A mobile app that connects households, restaurants, and supermarkets around food stock. Every role gets its own flow — sign-up, stock and category management, recipe recommendations, ordering and checkout, chat, and support — designed screen by screen in Figma.",
+    ratio: "story",
+    cover: "4-main-menu",
+    // TODO(michael): paste the Figma share link.
+    figma: "",
+  },
+  {
+    slug: "promohub",
+    group: "uiux",
+    title: "PromoHub",
+    summary: "Web platform for discovering merchant promos and redeeming points.",
+    intro:
+      "A promo-discovery website: homepage, search and category browsing, merchant pages, descriptions, reviews, bookmarks, and a points-redemption system. Each page is shown as a full-length screenshot — open one and scroll.",
+    ratio: "portrait",
+    cover: "homepage",
+    // TODO(michael): paste the Figma share link.
+    figma: "",
+  },
+
+  // --- Video --------------------------------------------------------------
+  {
+    slug: "video",
+    group: "video",
+    title: "Video editing",
+    summary: "Short-form product videos and two longer course projects.",
+    intro:
+      "Edited videos: twelve short vertical product videos for a fashion label's social channels, and two longer final-project videos from university coursework.",
     ratio: "video",
   },
 ];
 
-// Short videos — hosted on YouTube. TODO(michael): paste each video's
-// YouTube ID (the part after `v=`), e.g. "dQw4w9WgXcQ".
-export const videos: { title: string; youtubeId: string }[] = [
-  { title: "Choose", youtubeId: "" },
-  { title: "Color", youtubeId: "" },
-  { title: "Complete Her Look", youtubeId: "" },
-  { title: "Handbag", youtubeId: "" },
-  { title: "Magnifier", youtubeId: "" },
-  { title: "Name The Style", youtubeId: "" },
-  { title: "Pick Model Style", youtubeId: "" },
-  { title: "Pick The Right One", youtubeId: "" },
-  { title: "Pick Your Clutch", youtubeId: "" },
-  { title: "Pick Your Favourite", youtubeId: "" },
-  { title: "Pick Your Style", youtubeId: "" },
-  { title: "Virgo", youtubeId: "" },
+export type Video = {
+  title: string;
+  youtubeId: string;
+  /** Vertical short or standard 16:9 video. */
+  kind: "short" | "video";
+};
+
+export const videoGroups: { label: string; videos: Video[] }[] = [
+  {
+    label: "Gykaco — short-form",
+    videos: [
+      { title: "Pick The Right One", youtubeId: "Halw9M7ApsI", kind: "short" },
+      { title: "Pick Your Style", youtubeId: "Rv1mtdKxOWY", kind: "short" },
+      { title: "Virgo", youtubeId: "YuJ8c8LeiOE", kind: "short" },
+      { title: "Choose", youtubeId: "lfePv0r9unI", kind: "short" },
+      { title: "Complete Her Look", youtubeId: "ItW683NHGhg", kind: "short" },
+      { title: "Color", youtubeId: "8jkTJvnu8g8", kind: "short" },
+      { title: "Handbag", youtubeId: "w0nuPiNAhug", kind: "short" },
+      { title: "Pick Your Favourite", youtubeId: "MrjQFPRuY50", kind: "short" },
+      { title: "Pick Your Clutch", youtubeId: "x_07cIsjJcw", kind: "short" },
+      { title: "Pick Model Style", youtubeId: "JDzQ4C2VJyw", kind: "short" },
+      { title: "Name The Style", youtubeId: "KIoKyonGB80", kind: "short" },
+      { title: "Magnifier", youtubeId: "beloiyvELOQ", kind: "short" },
+    ],
+  },
+  {
+    label: "Campus — final projects",
+    videos: [
+      // TODO(michael): give these friendlier titles if you like.
+      { title: "Character Building: Kewarganegaraan", youtubeId: "1HMcuW2OFgA", kind: "video" },
+      { title: "Character Building: Agama", youtubeId: "0va3vDbENNs", kind: "video" },
+    ],
+  },
 ];
+
+export const videos: Video[] = videoGroups.flatMap((g) => g.videos);
 
 const items = manifest.items as GalleryItem[];
 
@@ -123,15 +213,26 @@ export function coverFor(c: Collection): GalleryItem | undefined {
   return list[0];
 }
 
+/** YouTube poster for the video collection tile. */
+export function videoCover(): string | undefined {
+  const first = videos.find((v) => v.youtubeId);
+  return first ? `https://i.ytimg.com/vi/${first.youtubeId}/hqdefault.jpg` : undefined;
+}
+
 export function brandsFor(slug: string): string[] {
+  if (slug === "video") return videoGroups.map((g) => g.label.split(" — ")[0]);
   return [...new Set(itemsFor(slug).map((i) => i.brand))];
+}
+
+export function collectionsIn(group: CollectionGroup): Collection[] {
+  return collections.filter((c) => c.group === group);
 }
 
 export function collectionBySlug(slug: string): Collection | undefined {
   return collections.find((c) => c.slug === slug);
 }
 
-/** Display title for a piece — falls back to "<brand> · n" for untitled exports. */
+/** Display title for a piece — falls back to "<brand> nn" for untitled exports. */
 export function itemTitle(item: GalleryItem, index: number): string {
   return item.title ?? `${item.brand} ${String(index + 1).padStart(2, "0")}`;
 }

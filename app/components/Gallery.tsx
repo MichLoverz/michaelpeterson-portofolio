@@ -9,6 +9,8 @@ type GallerySection = { label: string | null; items: GalleryItem[] };
 type Props = {
   sections: GallerySection[];
   ratio: Collection["ratio"];
+  /** Show each piece's title under its thumbnail (useful for UI screens). */
+  captions?: boolean;
 };
 
 // Grid density per aspect ratio.
@@ -20,7 +22,7 @@ const grid: Record<Collection["ratio"], string> = {
   video: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
 };
 
-export default function Gallery({ sections, ratio }: Props) {
+export default function Gallery({ sections, ratio, captions = false }: Props) {
   const flat = sections.flatMap((s) => s.items);
   const [open, setOpen] = useState<number | null>(null);
 
@@ -87,6 +89,11 @@ export default function Gallery({ sections, ratio }: Props) {
                           loading="lazy"
                           className="block h-auto w-full"
                         />
+                        {captions && (
+                          <span className="block truncate border-t border-steel px-3 py-2 text-sm text-ash transition-colors group-hover:text-bone">
+                            {itemTitle(item, index)}
+                          </span>
+                        )}
                       </button>
                     </li>
                   );
@@ -119,6 +126,7 @@ export default function Gallery({ sections, ratio }: Props) {
                 {flat[open].group ? ` / ${flat[open].group}` : ""}
                 {" / "}
                 {String(open + 1).padStart(2, "0")} of {flat.length}
+                {flat[open].tall ? " / scroll to read the full page" : ""}
               </p>
             </div>
             <button
@@ -132,18 +140,35 @@ export default function Gallery({ sections, ratio }: Props) {
             </button>
           </div>
 
-          {/* Image */}
+          {/* Image — tall pages scroll inside the viewer instead of shrinking to fit */}
           <div className="relative flex min-h-0 flex-1 items-center justify-center p-4 md:p-8">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              key={flat[open].id}
-              src={flat[open].full}
-              alt={itemTitle(flat[open], open)}
-              width={flat[open].width}
-              height={flat[open].height}
-              onClick={(e) => e.stopPropagation()}
-              className="max-h-full max-w-full object-contain"
-            />
+            {flat[open].tall ? (
+              <div
+                className="h-full w-full max-w-4xl overflow-y-auto border border-steel"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  key={flat[open].id}
+                  src={flat[open].full}
+                  alt={itemTitle(flat[open], open)}
+                  width={flat[open].width}
+                  height={flat[open].height}
+                  className="block h-auto w-full"
+                />
+              </div>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={flat[open].id}
+                src={flat[open].full}
+                alt={itemTitle(flat[open], open)}
+                width={flat[open].width}
+                height={flat[open].height}
+                onClick={(e) => e.stopPropagation()}
+                className="max-h-full max-w-full object-contain"
+              />
+            )}
             <button
               type="button"
               onClick={(e) => {

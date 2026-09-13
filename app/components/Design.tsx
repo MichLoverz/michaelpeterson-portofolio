@@ -1,15 +1,15 @@
 import Link from "next/link";
 import { collections, totalDesignPieces } from "@/app/lib/design";
-import CollectionTile from "./CollectionTile";
+import CollectionGroups from "./CollectionGroups";
 import Section from "./Section";
 
 export default function Design() {
   return (
     <Section id="design" index="04" title="Design">
-      <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+      <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
         <p className="max-w-xl text-lg text-ash">
-          Graphic design for consumer brands — print and digital.{" "}
-          {totalDesignPieces} pieces across {collections.length} collections.
+          Graphic design, UI/UX, and video editing — {totalDesignPieces} pieces
+          across {collections.length} collections.
         </p>
         <Link
           href="/design"
@@ -18,11 +18,7 @@ export default function Design() {
           Browse all design work
         </Link>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {collections.map((c) => (
-          <CollectionTile key={c.slug} collection={c} />
-        ))}
-      </div>
+      <CollectionGroups />
     </Section>
   );
 }
