@@ -69,6 +69,8 @@ export type Project = {
   image?: string;
   /** …a filename fragment matched in "Portofolio (by Folder)/College" (npm run gallery). */
   screen?: string;
+  /** Use the full-size copy instead of the thumb (thumbs of some collections are letterboxed). */
+  screenFull?: boolean;
   /** Gallery collection slug for a detail page at /development/<slug>. */
   gallery?: string;
   /** Intro text on the detail page. */
@@ -121,7 +123,8 @@ export const projects: Project[] = [
     tech: ["ResNet50", "Two-phase transfer learning", "Chest X-ray", "Grad-CAM", "5-fold cross-validation"],
     role: "First author & presenter — ICIMTech 2026 (IEEE)",
     links: [{ href: "https://bit.ly/ProceedingICIMTech2026", label: "Conference proceedings" }],
-    screen: "grad-cam",
+    screen: "09-certificate-author",
+    screenFull: true,
     gallery: "tb-paper",
     galleryIntro:
       "Figures from the paper, in reading order: the two-phase training pipeline and model architecture, training curves, evaluation on the held-out test set (confusion matrix, ROC, comparison across six models), Grad-CAM interpretability maps and sample predictions — then the author and presenter certificates from the 2026 International Conference on Information Management and Technology, held 19–20 August 2026 in Tangerang.",

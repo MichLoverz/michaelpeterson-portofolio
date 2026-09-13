@@ -12,7 +12,7 @@ export function projectImage(project: Project): string | undefined {
   if (project.image) return project.image;
   if (project.screen) {
     const hit = screenFor(project.screen, ["dev-screens", ...(project.gallery ? [project.gallery] : [])]);
-    if (hit) return hit.thumb;
+    if (hit) return project.screenFull ? hit.full : hit.thumb;
   }
   if (project.design) {
     const c = collectionBySlug(project.design.split("/").pop() ?? "");
