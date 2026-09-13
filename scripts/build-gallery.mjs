@@ -59,7 +59,8 @@ const SOURCES = [
   { dir: "College/UI UX Web/PromoHub", brand: "PromoHub", collection: "promohub", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
   { dir: "College/UI UX Web/Mr Coffee", brand: "Mr. Coffee", collection: "mrcoffee", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
   { dir: "College/UI UX Web/Mr Coffee HTML Version", brand: "Mr. Coffee", collection: "mrcoffee-html", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
-  { dir: "College/UI UX Web/PortfolioX", brand: "PortfolioX", collection: "portfoliox", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
+  // PortfolioX files carry a "01. " ordering prefix, so name order is the intended order.
+  { dir: "College/UI UX Web/PortfolioX", brand: "PortfolioX", collection: "portfoliox", tallPages: 1.4, thumbAspect: [4, 5] },
   { dir: "College/UI UX Web/AIVI", brand: "AIVI", collection: "aivi", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
 ];
 

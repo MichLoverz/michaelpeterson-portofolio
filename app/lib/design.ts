@@ -161,12 +161,13 @@ export const collections: Collection[] = [
     title: "PortfolioX",
     summary: "Investment portfolio platform — dashboard, simulation, optimisation, and risk profiling. Shipped to production.",
     intro:
-      "Software Engineering group project, built and deployed as a real product. PortfolioX helps investors manage a portfolio, run simulations, optimise allocations, and profile their risk. I owned the UI/UX design, worked on the backend, and helped write the documentation. Desktop pages first, then the mobile layout.",
+      "Software Engineering group project, built and deployed as a real product. PortfolioX helps investors manage a portfolio, run Monte Carlo simulations against the efficient frontier, optimise allocations with mean-variance optimisation, and profile their risk. I owned the UI/UX design, worked on the FastAPI backend, and helped write the documentation. Website pages first, then the mobile layout.",
     ratio: "portrait",
-    cover: "homepage-1",
+    cover: "01-homepage",
     figma: "https://www.figma.com/design/Iab0DNkJIKDZ4HHT1eIYFb/PORTOFOLIOX?node-id=0-1&t=sXpFrzlpnrPG9y5P-1",
     links: [
       { href: "https://portfoliox-se.vercel.app/", label: "Open live site" },
+      { href: "https://github.com/Software-Engineering-LD01/PortfolioX", label: "Source on GitHub" },
       {
         href: "https://app.notion.com/p/PORTFOLIOX-Software-Engineering-Project-Documentation-fb39690328d94aa1a3a35e884eeb1867",
         label: "Read the documentation",
