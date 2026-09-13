@@ -132,6 +132,17 @@ export const collections: Collection[] = [
     cover: "infographic",
   },
 
+  {
+    slug: "just-for-fun",
+    group: "graphic",
+    title: "Just for fun",
+    summary: "Personal Photoshop pieces — photo manipulation, glitch effects, and whatever caught my eye.",
+    intro:
+      "Made in spare time, for nobody but me. Photo manipulation is one of the hardest techniques in Photoshop to get right, and one of the most satisfying — these are the experiments that made it out of the drafts folder.",
+    ratio: "square",
+    cover: "photo-manipulation",
+  },
+
   // --- UI/UX design -------------------------------------------------------
   {
     slug: "pantryhub",
@@ -215,9 +226,9 @@ export const collections: Collection[] = [
     slug: "video",
     group: "video",
     title: "Video editing",
-    summary: "Short-form product videos for two brands and two longer course projects.",
+    summary: "Short-form product videos for two brands, two longer course projects, and freelance work.",
     intro:
-      "Edited videos: short vertical product videos for a fashion label and a health-supplement brand's social channels, and two longer final-project videos from university coursework.",
+      "Edited videos: short vertical product videos for a fashion label and a health-supplement brand's social channels, two longer final-project videos from university coursework, and freelance work.",
     ratio: "video",
   },
 ];
@@ -281,6 +292,13 @@ export const videoGroups: { label: string; videos: Video[] }[] = [
       // TODO(michael): give these friendlier titles if you like.
       { title: "Character Building: Kewarganegaraan", youtubeId: "1HMcuW2OFgA", kind: "video" },
       { title: "Character Building: Agama", youtubeId: "0va3vDbENNs", kind: "video" },
+    ],
+  },
+  {
+    label: "Freelance",
+    videos: [
+      // TODO(michael): name the client or the kind of video.
+      { title: "Freelance project", youtubeId: "oiiiQ0qkgGA", kind: "short" },
     ],
   },
 ];

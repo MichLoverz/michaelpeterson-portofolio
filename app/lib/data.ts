@@ -83,22 +83,6 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "Campus Network Design",
-    slug: "campus-network",
-    category: "Networking",
-    description:
-      "A complete network for the three-floor Binus Syahdan campus, designed in Cisco Packet Tracer from the actual floor plans: sizing the number of PCs per room, choosing routers and switches, planning the IP addressing, and wiring it all into one working topology with a server block. Documented in a 90-page final report.",
-    // TODO(michael): add the protocols you configured (VLAN, DHCP, OSPF, NAT…).
-    tech: ["Cisco Packet Tracer", "Routing & switching", "IP addressing", "Network topology"],
-    role: "Computer Networks — course project",
-    report: "https://drive.google.com/drive/folders/1AKSZ7gXvFmKJdwovZu1ONI8qjAWsRjvX?usp=drive_link",
-    screen: "overall",
-    gallery: "cisco",
-    galleryIntro:
-      "From floor plan to topology. The building's floor plans set the room count and PC count per room; the Packet Tracer screenshots show how each floor is wired and how the floors meet at the core and the server block. The .pkt file and the full report — device list, IP tables, and configuration — are in the Drive folder.",
-    featured: true,
-  },
-  {
     title: "Fresh Fruitness Detection",
     category: "AI / Machine Learning",
     description:
@@ -175,6 +159,20 @@ export const projects: Project[] = [
     tech: ["Flutter", "Dart"],
     role: "Individual project",
     repo: "https://github.com/MichLoverz/LnT_Mid-Project-Flutter",
+  },
+  {
+    title: "Campus Network Design",
+    slug: "campus-network",
+    category: "Networking",
+    description:
+      "A complete network for the three-floor Binus Syahdan campus, designed in Cisco Packet Tracer from the actual floor plans: sizing the number of PCs per room, choosing routers and switches, planning the IP addressing, and wiring it all into one working topology with a server block. Documented in a 90-page final report.",
+    tech: ["Cisco Packet Tracer", "Routing & switching", "IP addressing", "Network topology"],
+    role: "Group project — Computer Networks",
+    report: "https://drive.google.com/drive/folders/1AKSZ7gXvFmKJdwovZu1ONI8qjAWsRjvX?usp=drive_link",
+    screen: "04-floor-1",
+    gallery: "cisco",
+    galleryIntro:
+      "From floor plan to topology. The building's floor plans set the room count and PC count per room; the Packet Tracer screenshots show how each floor is wired and how the floors meet at the core and the server block. The .pkt file and the full report — device list, IP tables, and configuration — are in the Drive folder.",
   },
 ];
 

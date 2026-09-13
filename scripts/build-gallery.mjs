@@ -63,6 +63,7 @@ const SOURCES = [
   { dir: "Gykaco/Lorikeet", brand: "Gykaco", collection: "lorikeet" },
   { dir: "College/Design", brand: "BabyBloom", collection: "lorikeet", match: /lorikeet/i },
   { dir: "College/Design", brand: "BabyBloom", collection: "campus-design", exclude: /lorikeet/i },
+  { dir: "Individual Project (Just for Fun)", brand: "Personal", collection: "just-for-fun", square: true },
   { dir: "College/UI UX Application/PantryHub", brand: "PantryHub", collection: "pantryhub", groupBySubfolder: true, rootGroup: "Brand" },
   { dir: "College/UI UX Web/PromoHub", brand: "PromoHub", collection: "promohub", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
   { dir: "College/UI UX Web/Mr Coffee", brand: "Mr. Coffee", collection: "mrcoffee", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
