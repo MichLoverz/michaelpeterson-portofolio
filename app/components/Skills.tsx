@@ -3,22 +3,31 @@ import Section from "./Section";
 
 export default function Skills() {
   return (
-    <Section id="skills" index="04" title="Skills">
-      <div className="border-t border-steel">
-        {skills.map((group) => (
-          <div
-            key={group.group}
-            className="grid gap-3 border-b border-steel py-6 md:grid-cols-[14rem_1fr] md:gap-8 md:py-8"
-          >
-            <h3 className="font-display flex items-center gap-3 text-2xl font-bold text-bone">
-              <span aria-hidden className="h-3 w-0.5 bg-signal" />
-              {group.group}
+    <Section id="skills" index="05" title="Skills">
+      <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        {skills.map((division) => (
+          <div key={division.division}>
+            <h3 className="font-display mb-4 text-3xl font-bold text-bone">
+              {division.division}
             </h3>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-lg text-ash">
-              {group.items.map((item) => (
-                <li key={item}>{item}</li>
+            <div className="border-t border-steel">
+              {division.groups.map((group) => (
+                <div
+                  key={group.group}
+                  className="grid gap-2 border-b border-steel py-5 sm:grid-cols-[9rem_1fr] sm:gap-6"
+                >
+                  <h4 className="flex items-center gap-3 text-sm font-semibold uppercase tracking-wider text-bone">
+                    <span aria-hidden className="h-3 w-0.5 bg-signal" />
+                    {group.group}
+                  </h4>
+                  <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-base text-ash">
+                    {group.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         ))}
       </div>

@@ -10,7 +10,7 @@ const ordered = [
 
 export default function Projects() {
   return (
-    <Section id="projects" index="03" title="Projects">
+    <Section id="development" index="03" title="Development">
       <p className="mb-10 max-w-xl text-lg text-ash">
         {projects.length} projects across machine learning, computer vision,
         mobile, and web. Source code is public for each one.

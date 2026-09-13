@@ -4,7 +4,7 @@ import { GithubIcon, LinkedinIcon, MailIcon } from "./icons";
 
 export default function Contact() {
   return (
-    <Section id="contact" index="05" title="Contact">
+    <Section id="contact" index="06" title="Contact">
       <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-20">
         <div>
           <p className="max-w-xl text-lg leading-relaxed text-bone md:text-xl">

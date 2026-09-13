@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw design source files (large) ? optimised copies live in public/design
+/Portofolio (by Folder)/

@@ -15,21 +15,21 @@ export const profile = {
   about: [
     "I'm a Computer Science student focused on the practical side of artificial intelligence — from training and evaluating machine learning models to shipping the results as usable products.",
     "My work spans predictive modelling, computer vision, and cross-platform mobile development with Flutter. I enjoy taking a problem from raw data all the way to a deployed application.",
+    "I also design. Packaging, product catalogs, marketplace listings, and social media visuals for consumer brands — the same attention to detail I bring to code.",
   ],
   location: "Jakarta, Indonesia",
   // Spec sheet shown next to the about text. TODO(michael): fill in real values.
   specs: [
     { key: "Base", value: "Jakarta, Indonesia" },
     { key: "Education", value: "Computer Science, Binus University" },
-    { key: "Focus", value: "Machine learning, computer vision" },
-    { key: "Also", value: "Flutter mobile apps, Laravel web" },
+    { key: "Development", value: "Machine learning, computer vision, Flutter" },
+    { key: "Design", value: "Packaging, catalogs, marketplace, social media" },
     { key: "Status", value: "Open to internships" },
   ],
-  email: "hensselc@gmail.com",
+  email: "michaelmarcel18@gmail.com",
   socials: {
     github: "https://github.com/MichLoverz",
-    // TODO(michael): add your real LinkedIn URL.
-    linkedin: "https://www.linkedin.com/in/",
+    linkedin: "https://www.linkedin.com/in/michael-peterson-015339387/",
   },
   // TODO(michael): drop a resume PDF into /public and set the path, e.g. "/resume.pdf".
   resumeUrl: "",
@@ -125,21 +125,28 @@ export const projects: Project[] = [
   },
 ];
 
-export const skills: { group: string; items: string[] }[] = [
+export type SkillGroup = { group: string; items: string[] };
+
+export const skills: { division: string; groups: SkillGroup[] }[] = [
   {
-    group: "AI / Machine Learning",
-    items: ["Python", "scikit-learn", "pandas", "NumPy", "TensorFlow / Keras", "OpenCV", "Jupyter"],
+    division: "Development",
+    groups: [
+      {
+        group: "AI / Machine Learning",
+        items: ["Python", "scikit-learn", "pandas", "NumPy", "TensorFlow / Keras", "OpenCV", "Jupyter"],
+      },
+      { group: "Mobile", items: ["Flutter", "Dart"] },
+      { group: "Web", items: ["Laravel", "PHP", "Streamlit", "HTML / CSS", "JavaScript"] },
+      { group: "Tools", items: ["Git & GitHub", "VS Code", "Vercel"] },
+    ],
   },
   {
-    group: "Mobile",
-    items: ["Flutter", "Dart", "Figma"],
-  },
-  {
-    group: "Web",
-    items: ["Laravel", "PHP", "Streamlit", "HTML / CSS", "JavaScript"],
-  },
-  {
-    group: "Tools",
-    items: ["Git & GitHub", "VS Code", "Vercel"],
+    division: "Design",
+    groups: [
+      // TODO(michael): confirm the tools you actually use.
+      { group: "Tools", items: ["Adobe Photoshop", "Adobe Illustrator", "Figma"] },
+      { group: "Print", items: ["Packaging dielines", "Product catalogs"] },
+      { group: "Digital", items: ["Marketplace listings", "Instagram feeds & stories", "Short-form video"] },
+    ],
   },
 ];

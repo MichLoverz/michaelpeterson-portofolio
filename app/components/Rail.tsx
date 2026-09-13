@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { profile } from "@/app/lib/data";
 import { CloseIcon, GithubIcon, LinkedinIcon, MenuIcon } from "./icons";
@@ -7,16 +8,23 @@ import { CloseIcon, GithubIcon, LinkedinIcon, MenuIcon } from "./icons";
 export const sections = [
   { id: "top", index: "01", label: "Start" },
   { id: "about", index: "02", label: "Profile" },
-  { id: "projects", index: "03", label: "Projects" },
-  { id: "skills", index: "04", label: "Skills" },
-  { id: "contact", index: "05", label: "Contact" },
+  { id: "development", index: "03", label: "Development" },
+  { id: "design", index: "04", label: "Design" },
+  { id: "skills", index: "05", label: "Skills" },
+  { id: "contact", index: "06", label: "Contact" },
 ];
 
-export default function Rail() {
-  const [active, setActive] = useState("top");
+type Props = {
+  /** Force the highlighted section (used on sub-pages where there is nothing to observe). */
+  current?: string;
+};
+
+export default function Rail({ current }: Props) {
+  const [active, setActive] = useState(current ?? "top");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (current) return;
     const els = sections
       .map((s) => document.getElementById(s.id))
       .filter((el): el is HTMLElement => el !== null);
@@ -33,7 +41,7 @@ export default function Rail() {
     );
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [current]);
 
   return (
     <>
@@ -42,13 +50,13 @@ export default function Rail() {
         className="fixed inset-y-0 left-0 z-40 hidden w-[var(--rail-w)] flex-col items-center border-r border-steel bg-ink md:flex"
         aria-label="Section navigation"
       >
-        <a
-          href="#top"
+        <Link
+          href="/"
           className="font-display flex h-[var(--rail-w)] w-full items-center justify-center border-b border-steel text-xl font-extrabold text-bone"
           aria-label="Back to start"
         >
           MP
-        </a>
+        </Link>
 
         <nav className="flex flex-1 flex-col justify-center gap-1">
           {sections.map((s) => {
@@ -56,7 +64,7 @@ export default function Rail() {
             return (
               <a
                 key={s.id}
-                href={`#${s.id}`}
+                href={`/#${s.id}`}
                 aria-current={isActive ? "true" : undefined}
                 className="group relative flex h-14 w-[var(--rail-w)] items-center justify-center"
               >
@@ -111,9 +119,9 @@ export default function Rail() {
       {/* Mobile top bar */}
       <header className="sticky top-0 z-40 border-b border-steel bg-ink md:hidden">
         <div className="flex h-14 items-center justify-between px-5">
-          <a href="#top" className="font-display text-lg font-extrabold text-bone">
+          <Link href="/" className="font-display text-lg font-extrabold text-bone">
             MP
-          </a>
+          </Link>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -133,7 +141,7 @@ export default function Rail() {
             {sections.map((s) => (
               <a
                 key={s.id}
-                href={`#${s.id}`}
+                href={`/#${s.id}`}
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-4 border-b border-steel px-5 py-3 last:border-b-0"
               >
