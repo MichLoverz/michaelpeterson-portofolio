@@ -19,7 +19,7 @@ export async function generateMetadata({
 }: PageProps<"/development/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const p = detailed.find((x) => x.slug === slug);
-  return p ? { title: `${p.title} — Michael Peterson`, description: p.description } : {};
+  return p ? { title: `${p.pageTitle ?? p.title} — Michael Peterson`, description: p.description } : {};
 }
 
 export default async function ProjectPage({ params }: PageProps<"/development/[slug]">) {
@@ -34,7 +34,7 @@ export default async function ProjectPage({ params }: PageProps<"/development/[s
     ...(project.demo ? [{ href: project.demo, label: "Open live app" }] : []),
     ...(project.repo ? [{ href: project.repo, label: project.repoLabel ?? "Open repository" }] : []),
     ...(project.notebook ? [{ href: project.notebook, label: "Open notebook" }] : []),
-    ...(project.presentation ? [{ href: project.presentation, label: "Watch the presentation" }] : []),
+    ...(project.presentation ? [{ href: project.presentation, label: "Watch presentation" }] : []),
     ...(project.report ? [{ href: project.report, label: "Final report & files" }] : []),
     ...(project.docs ? [{ href: project.docs, label: "Documentation" }] : []),
     ...(project.design ? [{ href: project.design, label: "See the design" }] : []),
@@ -53,7 +53,7 @@ export default async function ProjectPage({ params }: PageProps<"/development/[s
               { href: `/development/${project.slug}`, label: project.shortTitle ?? project.title },
             ]}
             index={`03.${index}`}
-            title={project.title}
+            title={project.pageTitle ?? project.title}
             intro={project.galleryIntro ?? project.description}
             meta={[project.category, project.role].join(" / ")}
             actions={actions}

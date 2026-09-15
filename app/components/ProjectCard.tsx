@@ -21,7 +21,7 @@ export function projectImage(project: Project): string | undefined {
   return undefined;
 }
 
-function Thumb({ project }: { project: Project }) {
+function Thumb({ project, contain = false }: { project: Project; contain?: boolean }) {
   const src = projectImage(project);
   if (src) {
     return (
@@ -29,7 +29,7 @@ function Thumb({ project }: { project: Project }) {
       <img
         src={src}
         alt={project.title}
-        className="h-full w-full object-cover object-left-top"
+        className={`h-full w-full ${contain ? "bg-ink object-contain" : "object-cover object-center"}`}
       />
     );
   }
@@ -54,20 +54,21 @@ export default function ProjectCard({ project, index }: Props) {
           : "flex-col"
       }`}
     >
-      {/* Thumbnail — featured cards cap the image at 4:3 so the text column
-          never floats in empty space; the image is cropped from the top. */}
+      {/* Thumbnail — covers are 16:9.5 designed frames. Featured cards show the
+          whole frame on an ink ground (the text column sets the height); regular
+          cards are 16:9, close enough to fill. */}
       <div
         className={`relative shrink-0 border-steel ${
           featured
-            ? "aspect-video border-b md:aspect-[4/3] md:w-[46%] md:border-b-0 md:border-r"
+            ? "aspect-video border-b md:aspect-auto md:w-[55%] md:border-b-0 md:border-r"
             : "aspect-video border-b"
         }`}
       >
-        <Thumb project={project} />
+        <Thumb project={project} contain={Boolean(featured)} />
       </div>
 
       {/* Body */}
-      <div className="flex flex-1 flex-col p-6 md:p-8">
+      <div className={`flex flex-1 flex-col p-6 ${featured ? "md:p-7" : ""}`}>
         <div className="flex items-center justify-between gap-4">
           <span className="label flex items-center gap-2">
             <span aria-hidden className="h-2 w-2 bg-signal" />
@@ -78,11 +79,7 @@ export default function ProjectCard({ project, index }: Props) {
 
         <h3
           className={`font-display mt-4 font-bold leading-none text-bone transition-colors group-hover:text-signal ${
-            featured
-              ? project.title.length > 40
-                ? "text-3xl md:text-4xl" // long titles (papers) step down one size
-                : "text-4xl md:text-5xl"
-              : "text-3xl"
+            featured ? "text-3xl md:text-4xl" : "text-3xl"
           }`}
         >
           {project.title}
@@ -128,7 +125,7 @@ export default function ProjectCard({ project, index }: Props) {
           {project.presentation && (
             <a href={project.presentation} target="_blank" rel="noreferrer" className={linkClass}>
               <ExternalLinkIcon width={16} height={16} />
-              Watch the presentation
+              Watch presentation
             </a>
           )}
           {project.report && (

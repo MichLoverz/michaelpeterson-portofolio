@@ -38,6 +38,8 @@ export const profile = {
 
 export type Project = {
   title: string;
+  /** Full title for the detail page when the card title is a shortened label. */
+  pageTitle?: string;
   /** Short name for breadcrumbs when the title is long (e.g. a paper title). */
   shortTitle?: string;
   /** URL segment for the detail page (only used when `gallery` is set). */
@@ -80,54 +82,19 @@ export type Project = {
 
 // Draft descriptions inferred from repository names — please correct.
 export const projects: Project[] = [
+  // --- Featured (wide cards) -------------------------------------------------
   {
     title: "PortfolioX",
     category: "Web",
     description:
-      "An investment portfolio platform — dashboard, Monte Carlo simulation against the efficient frontier, mean-variance optimisation, and risk profiling — built by a team for Software Engineering and deployed to production. I owned the UI/UX, worked on the backend, and helped write the documentation.",
+      "An investment portfolio platform — dashboard, Monte Carlo simulation, mean-variance optimisation, and risk profiling — built by a team for Software Engineering and deployed to production. I owned the UI/UX, worked on the backend, and helped write the documentation.",
     tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "FastAPI", "Python", "PostgreSQL (Supabase)", "SQLAlchemy", "yfinance", "scipy", "Vercel"],
     role: "Group project — UI/UX, backend, documentation",
     repo: "https://github.com/Software-Engineering-LD01/PortfolioX",
     demo: "https://portfoliox-se.vercel.app/",
     docs: "https://app.notion.com/p/PORTFOLIOX-Software-Engineering-Project-Documentation-fb39690328d94aa1a3a35e884eeb1867",
     design: "/design/portfoliox",
-    featured: true,
-  },
-  {
-    title: "Review Authenticity Analyzer",
-    slug: "review-authenticity",
-    category: "AI / Machine Learning",
-    description:
-      "An NLP system that judges whether an Indonesian online review is genuine or fake. Two models run side by side — an LSTM over Word2Vec embeddings and a fine-tuned IndoBERT — combined with linguistic-feature analysis, served by a FastAPI backend behind a React interface and shipped as a Docker container on Hugging Face Spaces.",
-    tech: ["Python", "TensorFlow / Keras", "IndoBERT", "Word2Vec", "FastAPI", "React", "Docker", "Hugging Face Spaces"],
-    role: "Group project — final project",
-    repo: "https://huggingface.co/spaces/MichLoverz/review-authenticity-analyzer/tree/main",
-    repoLabel: "Source on Hugging Face",
-    demo: "https://huggingface.co/spaces/MichLoverz/review-authenticity-analyzer",
-    presentation: "https://www.youtube.com/watch?v=5KDMEInRzzU",
-    demoNote:
-      "Runs on Hugging Face's free tier: it sleeps when idle and takes a minute to wake. If it shows a runtime error instead, only I can restart it — send me a message and I'll bring it back up.",
-    screen: "01-short-review",
-    gallery: "nlp",
-    galleryIntro:
-      "The same three reviews, scored by both models. A glowing one-liner, a review that reads like a template, and a long, specific one — the LSTM + Word2Vec and IndoBERT models mostly agree, and where they differ the gap says something about how each reads the text.",
-    featured: true,
-  },
-  {
-    title: "Two-Phase Transfer Learning with ResNet50 for Tuberculosis Detection in Chest X-rays",
-    shortTitle: "TB detection paper",
-    slug: "tb-detection-paper",
-    category: "Research",
-    description:
-      "Tuberculosis is the world's deadliest infectious disease, and chest X-ray screening is bottlenecked by radiologist shortages. This paper compares a ResNet50 trained in two phases — classification head first with the backbone frozen, then the top 30 layers fine-tuned at a reduced learning rate — against single- and two-phase baselines on other CNNs, using 2,200 X-rays pooled from the Shenzhen, Montgomery County, and Kaggle TB datasets. On a held-out set of 330 images it reached 92.1% accuracy, 96.6% precision, and 0.978 AUC-ROC (five-fold CV: 0.975 ± 0.008), and Grad-CAM maps show it attends to clinically relevant lung regions. Accepted and presented at ICIMTech 2026 (IEEE).",
-    tech: ["ResNet50", "Two-phase transfer learning", "Chest X-ray", "Grad-CAM", "5-fold cross-validation"],
-    role: "First author & presenter — ICIMTech 2026 (IEEE)",
-    links: [{ href: "https://bit.ly/ProceedingICIMTech2026", label: "Conference proceedings" }],
-    screen: "09-certificate-author",
-    screenFull: true,
-    gallery: "tb-paper",
-    galleryIntro:
-      "Figures from the paper, in reading order: the two-phase training pipeline and model architecture, training curves, evaluation on the held-out test set (confusion matrix, ROC, comparison across six models), Grad-CAM interpretability maps and sample predictions — then the author and presenter certificates from the 2026 International Conference on Information Management and Technology, held 19–20 August 2026 in Tangerang.",
+    screen: "portfoliox",
     featured: true,
   },
   {
@@ -136,13 +103,33 @@ export const projects: Project[] = [
     description:
       "A computer-vision model that classifies fruit as fresh or spoiled from images, trained and evaluated in a Kaggle notebook and wrapped in a small demo app for the final presentation (the app's interface was scaffolded with AI assistance).",
     tech: ["Python", "TensorFlow / Keras", "OpenCV", "Kaggle"],
+    role: "Group project — final project",
     repo: "https://github.com/MichLoverz/group4-final_project-computer_vision-fresh_fruitness_detection",
     notebook: "https://www.kaggle.com/code/michloverz/fruit-freshness-demo-comvis-group-4",
     presentation: "https://www.youtube.com/watch?v=0obijlGrcCE",
-    role: "Group project — final project",
-    screen: "app-visual-for-comvis",
+    screen: "fresh-fruitness",
     featured: true,
   },
+  {
+    title: "Review Authenticity Analyzer",
+    slug: "review-authenticity",
+    category: "AI / Machine Learning",
+    description:
+      "Detects whether an Indonesian online review is genuine or fake, running an LSTM + Word2Vec model and a fine-tuned IndoBERT side by side. FastAPI backend, React front end, shipped as a Docker container on Hugging Face Spaces.",
+    tech: ["Python", "TensorFlow / Keras", "IndoBERT", "Word2Vec", "FastAPI", "React", "Docker", "Hugging Face Spaces"],
+    role: "Group project — final project",
+    repo: "https://huggingface.co/spaces/MichLoverz/review-authenticity-analyzer/tree/main",
+    repoLabel: "Source on Hugging Face",
+    demo: "https://huggingface.co/spaces/MichLoverz/review-authenticity-analyzer",
+    presentation: "https://www.youtube.com/watch?v=5KDMEInRzzU",
+    screen: "review-nlp",
+    gallery: "nlp",
+    galleryIntro:
+      "The same three reviews, scored by both models. A glowing one-liner, a review that reads like a template, and a long, specific one — the LSTM + Word2Vec and IndoBERT models mostly agree, and where they differ the gap says something about how each reads the text.",
+    featured: true,
+  },
+
+  // --- Regular cards -----------------------------------------------------------
   {
     title: "Wine Quality Prediction",
     category: "AI / Machine Learning",
@@ -179,6 +166,22 @@ export const projects: Project[] = [
     screen: "real-estate",
   },
   {
+    title: "Research Paper",
+    pageTitle: "Two-Phase Transfer Learning with ResNet50 for Tuberculosis Detection in Chest X-rays",
+    shortTitle: "Research paper",
+    slug: "tb-detection-paper",
+    category: "Research",
+    description:
+      "“Two-Phase Transfer Learning with ResNet50 for Tuberculosis Detection in Chest X-rays” — 92.1% accuracy and 0.978 AUC-ROC on 2,200 pooled chest X-rays, with Grad-CAM confirming attention on clinically relevant lung regions. Accepted and presented at ICIMTech 2026 (IEEE).",
+    tech: ["ResNet50", "Two-phase transfer learning", "Chest X-ray", "Grad-CAM", "5-fold cross-validation"],
+    role: "First author & presenter — ICIMTech 2026 (IEEE)",
+    links: [{ href: "https://bit.ly/ProceedingICIMTech2026", label: "Conference proceedings" }],
+    screen: "certificate-rm",
+    gallery: "tb-paper",
+    galleryIntro:
+      "Figures from the paper, in reading order: the two-phase training pipeline and model architecture, training curves, evaluation on the held-out test set (confusion matrix, ROC, comparison across six models), Grad-CAM interpretability maps and sample predictions — then the author and presenter certificates from the 2026 International Conference on Information Management and Technology, held 19–20 August 2026 in Tangerang.",
+  },
+  {
     title: "Mr. Coffee (HTML)",
     category: "Web",
     description:
@@ -188,25 +191,7 @@ export const projects: Project[] = [
     // TODO(michael): push the code and add the repo URL, then remove repoNote.
     repoNote: "Source not published yet",
     design: "/design/mrcoffee-html",
-  },
-  {
-    title: "Flutter Final Project",
-    category: "Mobile",
-    description:
-      "A cross-platform mobile application built as the final project for the Learn & Train program, covering UI design, state management, and app logic.",
-    tech: ["Flutter", "Dart", "Figma"],
-    role: "Individual project",
-    repo: "https://github.com/MichLoverz/LnT_Final-Project-Flutter",
-    featured: true,
-  },
-  {
-    title: "Flutter Mid Project",
-    category: "Mobile",
-    description:
-      "A mobile application built for the mid-term of the Learn & Train program, focused on core Flutter widgets and navigation.",
-    tech: ["Flutter", "Dart"],
-    role: "Individual project",
-    repo: "https://github.com/MichLoverz/LnT_Mid-Project-Flutter",
+    screen: "mr-coffee-html",
   },
   {
     title: "Campus Network Design",
@@ -217,10 +202,43 @@ export const projects: Project[] = [
     tech: ["Cisco Packet Tracer", "Routing & switching", "IP addressing", "Network topology"],
     role: "Group project — Computer Networks",
     report: "https://drive.google.com/drive/folders/1AKSZ7gXvFmKJdwovZu1ONI8qjAWsRjvX?usp=drive_link",
-    screen: "04-floor-1",
+    screen: "cisco",
     gallery: "cisco",
     galleryIntro:
       "From floor plan to topology. The building's floor plans set the room count and PC count per room; the Packet Tracer screenshots show how each floor is wired and how the floors meet at the core and the server block. The .pkt file and the full report — device list, IP tables, and configuration — are in the Drive folder.",
+  },
+  {
+    title: "AI General Checkup",
+    category: "AI / Machine Learning",
+    description:
+      "AIVI: a web app that reads general check-up data — blood pressure, glucose, cholesterol — and returns AI-generated health recommendations with a downloadable summary. Final project for the Artificial Intelligence course; designed in Figma, then built.",
+    // TODO(michael): list the actual stack (model, backend, front end).
+    tech: ["Python", "Machine learning", "Web app"],
+    role: "Final project — Artificial Intelligence",
+    // TODO(michael): push the code and add the repo URL, then remove repoNote.
+    repoNote: "Source not published yet",
+    design: "/design/aivi",
+    screen: "aivi-development",
+  },
+
+  // --- No screenshots yet — kept last ------------------------------------------
+  {
+    title: "Flutter Mid Project",
+    category: "Mobile",
+    description:
+      "A mobile application built for the mid-term of the Learn & Train program, focused on core Flutter widgets and navigation.",
+    tech: ["Flutter", "Dart"],
+    role: "Individual project",
+    repo: "https://github.com/MichLoverz/LnT_Mid-Project-Flutter",
+  },
+  {
+    title: "Flutter Final Project",
+    category: "Mobile",
+    description:
+      "A cross-platform mobile application built as the final project for the Learn & Train program, covering UI design, state management, and app logic.",
+    tech: ["Flutter", "Dart", "Figma"],
+    role: "Individual project",
+    repo: "https://github.com/MichLoverz/LnT_Final-Project-Flutter",
   },
 ];
 

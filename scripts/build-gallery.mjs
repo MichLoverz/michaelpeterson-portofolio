@@ -40,6 +40,8 @@ const QUALITY = 82;
 //   thumbAspect:      [w, h] — every thumb gets this shape: taller images are
 //                     cropped to their top, shorter ones are centred on a dark canvas
 //   thumbFit:         "contain" — never crop; always fit the whole image on the canvas
+//                     "cover"   — never letterbox; wider images are centre-cropped to the aspect
+//   coverAnchor:      "left" — with thumbFit "cover", keep the left edge instead of the centre
 //   match / exclude:  regex on the filename — only include / skip matching files
 //   square:           centre-crop non-square images to 1:1 (keeps a feed grid even)
 //   orderBy:          "name" (default) or "shape" — portrait canvases first, then
@@ -48,6 +50,7 @@ const QUALITY = 82;
 const SOURCES = [
   // --- Development (screens for project cards and detail pages) ------------
   { dir: "College", brand: "Campus", collection: "dev-screens", recursive: false },
+  { dir: "College/Cover Website", brand: "Campus", collection: "dev-screens" },
   // Floor plans ("Denah Lantai n") sort before the Packet Tracer screenshots by name.
   { dir: "College/Cisco Packet Tracer", brand: "Campus Network", collection: "cisco", thumbAspect: [16, 10], thumbFit: "contain" },
   { dir: "College/NLP", brand: "Review Authenticity Analyzer", collection: "nlp" },
@@ -72,7 +75,8 @@ const SOURCES = [
   { dir: "College/UI UX Web/Mr Coffee HTML Version", brand: "Mr. Coffee", collection: "mrcoffee-html", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
   // PortfolioX files carry a "01. " ordering prefix, so name order is the intended order.
   { dir: "College/UI UX Web/PortfolioX", brand: "PortfolioX", collection: "portfoliox", tallPages: 1.4, thumbAspect: [4, 5] },
-  { dir: "College/UI UX Web/AIVI", brand: "AIVI", collection: "aivi", tallPages: 1.4, thumbAspect: [4, 5], orderBy: "shape" },
+  // AIVI frames are square/landscape: crop the centre to 4:5 so tiles match the other web projects.
+  { dir: "College/UI UX Web/AIVI", brand: "AIVI", collection: "aivi", tallPages: 1.4, thumbAspect: [4, 5], thumbFit: "cover", coverAnchor: "left", orderBy: "shape" },
 ];
 
 const CANVAS = { r: 27, g: 28, b: 31 }; // --graphite
@@ -216,6 +220,15 @@ async function main() {
           if (height > targetH && src.thumbFit !== "contain") {
             await thumb
               .extract({ left: 0, top: 0, width, height: targetH })
+              .resize({ width: THUMB_MAX, withoutEnlargement: true })
+              .webp({ quality: QUALITY })
+              .toFile(thumbPath);
+          } else if (src.thumbFit === "cover") {
+            // Image is wider than the aspect: keep full height, crop the sides.
+            const cropW = Math.round((height * aw) / ah);
+            const left = src.coverAnchor === "left" ? 0 : Math.round((width - cropW) / 2);
+            await thumb
+              .extract({ left, top: 0, width: cropW, height })
               .resize({ width: THUMB_MAX, withoutEnlargement: true })
               .webp({ quality: QUALITY })
               .toFile(thumbPath);

@@ -54,6 +54,8 @@ export type Collection = {
   ratio: "square" | "portrait" | "story" | "wide" | "video";
   /** Substring of the file path used as the overview cover; defaults to the first item. */
   cover?: string;
+  /** Use a designed cover from "College/Cover Website" instead (filename fragment). */
+  coverFrom?: string;
   /** External design file, shown as a button on the collection page. */
   figma?: string;
   /** Extra buttons on the collection page (live site, docs, related page). */
@@ -217,7 +219,7 @@ export const collections: Collection[] = [
     intro:
       "AIVI reads a user's general check-up data — blood pressure, glucose, cholesterol — and returns instant, AI-generated health recommendations. Landing page, authentication, and the main results page, in light mode.",
     ratio: "portrait",
-    cover: "landing",
+    coverFrom: "aivi-design",
     figma: "https://www.figma.com/design/0J8k5zyqXkrCeyL0paKPHP/AIVI?node-id=0-1&t=mZSh7LaK4zz2sezC-1",
   },
 
@@ -316,6 +318,10 @@ export function countFor(slug: string): number {
 }
 
 export function coverFor(c: Collection): GalleryItem | undefined {
+  if (c.coverFrom) {
+    const designed = itemsFor("dev-screens").find((i) => i.full.includes(c.coverFrom as string));
+    if (designed) return designed;
+  }
   const list = itemsFor(c.slug);
   if (c.cover) {
     const hit = list.find((i) => i.full.includes(c.cover as string));
