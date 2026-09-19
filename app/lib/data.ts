@@ -214,7 +214,7 @@ export const projects: Project[] = [
     role: "Individual project",
     repo: "https://github.com/MichLoverz/LnT_Mid-Project-Flutter",
     demo: "https://michaelpeterson-lnt-mid-project-flutter.vercel.app/",
-    screen: "flutter-mid",
+    screen: "mid-flutter",
   },
   {
     title: "Flutter Final Project",
@@ -225,7 +225,7 @@ export const projects: Project[] = [
     role: "Individual project",
     repo: "https://github.com/MichLoverz/LnT_Final-Project-Flutter",
     demo: "https://michaelpeterson-lnt-final-project-flutter.vercel.app/",
-    screen: "flutter-final",
+    screen: "final-flutter",
   },
   {
     title: "Campus Network Design",
