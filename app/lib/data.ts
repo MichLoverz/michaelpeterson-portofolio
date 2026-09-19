@@ -7,15 +7,12 @@
 
 export const profile = {
   name: "Michael Peterson",
-  // TODO(michael): tweak the tagline to how you'd like to be introduced.
-  role: "AI & Mobile Developer",
+  role: "AI Developer & Designer",
   tagline:
-    "Computer Science student at Binus University building machine learning models and mobile applications.",
-  // TODO(michael): 2–4 sentences about you. This is a draft — make it yours.
+    "Computer Science student at Binus University. I take machine learning from notebook to deployed product, design the interfaces it ships with, and published my first IEEE paper on deep learning for medical imaging.",
   about: [
-    "I'm a Computer Science student focused on the practical side of artificial intelligence — from training and evaluating machine learning models to shipping the results as usable products.",
-    "My work spans predictive modelling, computer vision, and cross-platform mobile development with Flutter. I enjoy taking a problem from raw data all the way to a deployed application.",
-    "I also design. Packaging, product catalogs, marketplace listings, and social media visuals for consumer brands — the same attention to detail I bring to code.",
+    "I work on the practical end of artificial intelligence: training and evaluating models, then turning them into things people can actually use — web apps, mobile apps, a network that runs a campus. Computer vision, NLP, and predictive modelling are where I've spent the most time; my ResNet50 paper on tuberculosis detection was accepted at ICIMTech 2026 (IEEE).",
+    "I also design, and I think it shows in the code. Packaging, catalogs, marketplace listings, social media, video — and the UI/UX for every app I build, from Figma to production.",
   ],
   location: "Jakarta, Indonesia",
   // Spec sheet shown next to the about text. TODO(michael): fill in real values.

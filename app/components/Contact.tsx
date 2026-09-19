@@ -9,8 +9,8 @@ export default function Contact() {
         <div>
           <p className="max-w-xl text-lg leading-relaxed text-bone md:text-xl">
             I&apos;m looking for internships and collaborations in machine
-            learning and mobile development. Email is the fastest way to reach
-            me.
+            learning, software development, and design. Email is the fastest
+            way to reach me.
           </p>
           <a
             href={`mailto:${profile.email}`}
