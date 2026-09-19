@@ -67,7 +67,7 @@ export default function Hero() {
 
           <div className="flex flex-wrap gap-3">
             <a
-              href="#projects"
+              href="#development"
               className="chamfer-sm font-display inline-flex items-center gap-2 bg-signal px-6 py-3 text-lg font-bold text-signal-ink transition-colors hover:bg-bone"
             >
               See projects

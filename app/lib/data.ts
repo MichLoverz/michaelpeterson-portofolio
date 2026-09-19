@@ -94,7 +94,7 @@ export const projects: Project[] = [
     demo: "https://portfoliox-se.vercel.app/",
     docs: "https://app.notion.com/p/PORTFOLIOX-Software-Engineering-Project-Documentation-fb39690328d94aa1a3a35e884eeb1867",
     design: "/design/portfoliox",
-    screen: "portfoliox",
+    screen: "portfoliox-cover",
     featured: true,
   },
   {
@@ -107,7 +107,7 @@ export const projects: Project[] = [
     repo: "https://github.com/MichLoverz/group4-final_project-computer_vision-fresh_fruitness_detection",
     notebook: "https://www.kaggle.com/code/michloverz/fruit-freshness-demo-comvis-group-4",
     presentation: "https://www.youtube.com/watch?v=0obijlGrcCE",
-    screen: "fresh-fruitness",
+    screen: "fruit-freshness",
     featured: true,
   },
   {
@@ -122,7 +122,7 @@ export const projects: Project[] = [
     repoLabel: "Source on Hugging Face",
     demo: "https://huggingface.co/spaces/MichLoverz/review-authenticity-analyzer",
     presentation: "https://www.youtube.com/watch?v=5KDMEInRzzU",
-    screen: "review-nlp",
+    screen: "nlp-cover",
     gallery: "nlp",
     galleryIntro:
       "The same three reviews, scored by both models. A glowing one-liner, a review that reads like a template, and a long, specific one — the LSTM + Word2Vec and IndoBERT models mostly agree, and where they differ the gap says something about how each reads the text.",
@@ -188,10 +188,44 @@ export const projects: Project[] = [
       "A coffee-shop website coded by hand for the Human–Computer Interaction final project — homepage, about, per-category menu pages, promos, and an ordering flow — after designing it in Figma.",
     tech: ["HTML", "CSS", "JavaScript"],
     role: "Individual project",
-    // TODO(michael): push the code and add the repo URL, then remove repoNote.
-    repoNote: "Source not published yet",
+    repo: "https://github.com/MichLoverz/Mr-Coffee-HTML",
+    demo: "https://mr-coffee-html.vercel.app/",
     design: "/design/mrcoffee-html",
     screen: "mr-coffee-html",
+  },
+  {
+    title: "AI General Checkup",
+    category: "AI / Machine Learning",
+    description:
+      "AIVI: a browser-based health screening app that reads general check-up data — blood pressure, glucose, cholesterol — and returns a cardiovascular risk score with personalised recommendations and a downloadable PDF summary. Final project for the Artificial Intelligence course; the prediction engine runs entirely in the browser.",
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Logistic regression", "Rule-based expert system", "Recharts", "jsPDF"],
+    role: "Final project — Artificial Intelligence",
+    repo: "https://github.com/MichLoverz/AIVI-AI-Driven-General-Checkup",
+    demo: "https://aivi-ai-driven-general-checkup.vercel.app/",
+    design: "/design/aivi",
+    screen: "aivi-development",
+  },
+  {
+    title: "Flutter Mid Project",
+    category: "Mobile",
+    description:
+      "A mobile application built for the mid-term of the Learn & Train program, focused on core Flutter widgets and navigation.",
+    tech: ["Flutter", "Dart"],
+    role: "Individual project",
+    repo: "https://github.com/MichLoverz/LnT_Mid-Project-Flutter",
+    demo: "https://michaelpeterson-lnt-mid-project-flutter.vercel.app/",
+    screen: "flutter-mid",
+  },
+  {
+    title: "Flutter Final Project",
+    category: "Mobile",
+    description:
+      "A cross-platform mobile application built as the final project for the Learn & Train program, covering UI design, state management, and app logic.",
+    tech: ["Flutter", "Dart", "Figma"],
+    role: "Individual project",
+    repo: "https://github.com/MichLoverz/LnT_Final-Project-Flutter",
+    demo: "https://michaelpeterson-lnt-final-project-flutter.vercel.app/",
+    screen: "flutter-final",
   },
   {
     title: "Campus Network Design",
@@ -206,39 +240,6 @@ export const projects: Project[] = [
     gallery: "cisco",
     galleryIntro:
       "From floor plan to topology. The building's floor plans set the room count and PC count per room; the Packet Tracer screenshots show how each floor is wired and how the floors meet at the core and the server block. The .pkt file and the full report — device list, IP tables, and configuration — are in the Drive folder.",
-  },
-  {
-    title: "AI General Checkup",
-    category: "AI / Machine Learning",
-    description:
-      "AIVI: a web app that reads general check-up data — blood pressure, glucose, cholesterol — and returns AI-generated health recommendations with a downloadable summary. Final project for the Artificial Intelligence course; designed in Figma, then built.",
-    // TODO(michael): list the actual stack (model, backend, front end).
-    tech: ["Python", "Machine learning", "Web app"],
-    role: "Final project — Artificial Intelligence",
-    // TODO(michael): push the code and add the repo URL, then remove repoNote.
-    repoNote: "Source not published yet",
-    design: "/design/aivi",
-    screen: "aivi-development",
-  },
-
-  // --- No screenshots yet — kept last ------------------------------------------
-  {
-    title: "Flutter Mid Project",
-    category: "Mobile",
-    description:
-      "A mobile application built for the mid-term of the Learn & Train program, focused on core Flutter widgets and navigation.",
-    tech: ["Flutter", "Dart"],
-    role: "Individual project",
-    repo: "https://github.com/MichLoverz/LnT_Mid-Project-Flutter",
-  },
-  {
-    title: "Flutter Final Project",
-    category: "Mobile",
-    description:
-      "A cross-platform mobile application built as the final project for the Learn & Train program, covering UI design, state management, and app logic.",
-    tech: ["Flutter", "Dart", "Figma"],
-    role: "Individual project",
-    repo: "https://github.com/MichLoverz/LnT_Final-Project-Flutter",
   },
 ];
 

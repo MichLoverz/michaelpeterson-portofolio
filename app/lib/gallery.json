@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T21:36:06.498Z",
+  "generatedAt": "2026-09-19T03:05:16.204Z",
   "items": [
     {
       "id": "c52ce86596",
@@ -114,18 +114,18 @@
       "mtime": 1789505918695.8115
     },
     {
-      "id": "61ee8c7e2b",
+      "id": "aaa8a2a97d",
       "collection": "dev-screens",
       "brand": "Campus",
       "group": null,
-      "title": "Fresh Fruitness",
+      "title": "Fruit Freshness",
       "tag": null,
       "width": 1919,
       "height": 1138,
       "tall": false,
-      "thumb": "/design/dev-screens/campus/fresh-fruitness-61ee8c7e2b.thumb.webp",
-      "full": "/design/dev-screens/campus/fresh-fruitness-61ee8c7e2b.webp",
-      "mtime": 1789505918615.348
+      "thumb": "/design/dev-screens/campus/fruit-freshness-aaa8a2a97d.thumb.webp",
+      "full": "/design/dev-screens/campus/fruit-freshness-aaa8a2a97d.webp",
+      "mtime": 1789781811740.146
     },
     {
       "id": "c77d293ed6",
@@ -142,32 +142,32 @@
       "mtime": 1789505918648.8416
     },
     {
-      "id": "4a5d0b13e7",
+      "id": "f2861282ba",
       "collection": "dev-screens",
       "brand": "Campus",
       "group": null,
-      "title": "PORTFOLIOX",
+      "title": "NLP Cover",
       "tag": null,
-      "width": 1919,
-      "height": 1138,
+      "width": 649,
+      "height": 449,
       "tall": false,
-      "thumb": "/design/dev-screens/campus/portfoliox-4a5d0b13e7.thumb.webp",
-      "full": "/design/dev-screens/campus/portfoliox-4a5d0b13e7.webp",
-      "mtime": 1789505918666.6077
+      "thumb": "/design/dev-screens/campus/nlp-cover-f2861282ba.thumb.webp",
+      "full": "/design/dev-screens/campus/nlp-cover-f2861282ba.webp",
+      "mtime": 1789508344590.4297
     },
     {
-      "id": "c816ae154e",
+      "id": "52a261cece",
       "collection": "dev-screens",
       "brand": "Campus",
       "group": null,
-      "title": "Review NLP",
+      "title": "PortfolioX Cover",
       "tag": null,
-      "width": 1919,
-      "height": 1138,
+      "width": 649,
+      "height": 475,
       "tall": false,
-      "thumb": "/design/dev-screens/campus/review-nlp-c816ae154e.thumb.webp",
-      "full": "/design/dev-screens/campus/review-nlp-c816ae154e.webp",
-      "mtime": 1789505918552.1484
+      "thumb": "/design/dev-screens/campus/portfoliox-cover-52a261cece.thumb.webp",
+      "full": "/design/dev-screens/campus/portfoliox-cover-52a261cece.webp",
+      "mtime": 1789508349604.6726
     },
     {
       "id": "0cbad3bb89",
