@@ -16,13 +16,13 @@ const barlowCondensed = Barlow_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: "Michael Peterson — AI Developer & Designer",
+  title: "Michael Peterson — AI Engineer & Full Stack Developer",
   description:
-    "Portfolio of Michael Peterson: machine learning, computer vision, and NLP projects shipped as web and mobile apps, an IEEE conference paper, and graphic and UI/UX design work.",
+    "Portfolio of Michael Peterson: machine learning, computer vision, and NLP models shipped end to end as web and mobile apps, an IEEE conference paper, and UI/UX and graphic design work.",
   openGraph: {
-    title: "Michael Peterson — AI Developer & Designer",
+    title: "Michael Peterson — AI Engineer & Full Stack Developer",
     description:
-      "Machine learning shipped as products, an IEEE paper, and design work — from packaging to UI/UX.",
+      "Models shipped end to end — from training to API to interface — plus an IEEE paper and design work.",
     type: "website",
   },
 };

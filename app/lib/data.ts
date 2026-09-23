@@ -7,9 +7,9 @@
 
 export const profile = {
   name: "Michael Peterson",
-  role: "AI Developer & Designer",
+  role: "AI Engineer & Full Stack Developer",
   tagline:
-    "Computer Science student at Binus University. I take machine learning from notebook to deployed product, design the interfaces it ships with, and published my first IEEE paper on deep learning for medical imaging.",
+    "Computer Science student at Binus University. I build the whole stack around a model — training and evaluation, the API that serves it, the interface people use — and ship it to production. First-author IEEE paper on deep learning for medical imaging.",
   about: [
     "I work on the practical end of artificial intelligence: training and evaluating models, then turning them into things people can actually use — web apps, mobile apps, a network that runs a campus. Computer vision, NLP, and predictive modelling are where I've spent the most time; my ResNet50 paper on tuberculosis detection was accepted at ICIMTech 2026 (IEEE).",
     "I also design, and I think it shows in the code. Packaging, catalogs, marketplace listings, social media, video — and the UI/UX for every app I build, from Figma to production.",
